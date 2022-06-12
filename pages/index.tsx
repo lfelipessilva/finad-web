@@ -16,7 +16,6 @@ const Wrapper = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
-  overflow: hidden;
   z-index: -1;
   background-image: url('./bubbles_background.png');
   background-size: cover;
@@ -66,8 +65,9 @@ const Container = styled.div`
   margin-top: 50px;
   padding: 20px;
 
-  @media (max-width: 768px) {
-    margin-top: 130px;
+  @media (max-width: 800px) {
+    margin-top: 16%;
+    flex-direction: column;
   }
 `
 
@@ -95,6 +95,11 @@ const ButtonsContainer = styled.div`
   gap: 20px;
 `
 
+const ImageContainer = styled.div`
+  @media (max-width: 800px) {
+    display: none;
+  }
+`
 export default function Home() {
   return (
     <>
@@ -143,12 +148,14 @@ export default function Home() {
             </ButtonsContainer>
           </TextContainer>
 
-          <Image
-            src={readingWomen}
-            alt="reading women"
-            width={700}
-            height={634}
-          />
+          <ImageContainer>
+            <Image
+              src={readingWomen}
+              alt="reading women"
+              width={700}
+              height={634}
+            />
+          </ImageContainer>
         </Container>
       </Wrapper>
     </>
