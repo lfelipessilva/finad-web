@@ -3,18 +3,23 @@ import { AppProps } from 'next/app'
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-  body {
-    padding: 0px;
-    margin: 0px;
-    background: #4c4c4c;
-    color: #f0f0f0;
-    font-family: proxima-nova, sans-serif
+  html { 
+    font-family: Open sans, sans-serif;
+
+    body {
+      margin: 0;
+    }
+    
+    p {
+      margin: 0;
+    }
   }
 `;
 
 const theme = {
   colors: {
-    primary: "#806060",
+    primary: "#367EFF",
+    secondary: "#BC5AE6"
   },
 };
 
