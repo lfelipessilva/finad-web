@@ -8,9 +8,9 @@ const SignInButton = styled.button`
    letter-spacing: 0.8px;
    line-height: 44px;
    border: 0;
-   width: 240px;
-   height: 74px;
-   font-size: 1.8rem;
+   min-width: 190px;
+   height: 60px;
+   font-size: 1.4rem;
    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
    border-radius: 12px;
    transition: all 0.25s;

@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   width: 100%;
   overflow: hidden;
   z-index: -1;
-  background-image: url('/_next/static/media/bubbles_background.fef4d588.png');
+  background-image: url('./bubbles_background.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -65,6 +65,10 @@ const Container = styled.div`
   z-index: 1;
   margin-top: 50px;
   padding: 20px;
+
+  @media (max-width: 768px) {
+    margin-top: 130px;
+  }
 `
 
 const TextContainer = styled.div`
@@ -73,16 +77,16 @@ const TextContainer = styled.div`
 
 const Title = styled.p`
   font-weight: 600;
-  font-size: 60px;
-  line-height: 82px;
+  font-size: 48px;
+  line-height: 3.5rem;
 `
 
 const SubText = styled.p`
   font-weight: 600;
-  font-size: 24px;
-  line-height: 33px;
+  font-size: 16px;
+  line-height: 24px;
   color: rgba(0, 0, 0, 0.8);
-  padding: 10px;
+  padding: 40px 0px 30px 0px;
 `
 
 const ButtonsContainer = styled.div`
