@@ -1,11 +1,10 @@
 import styled from 'styled-components'
 import NextLink from 'next/link'
 import Image from 'next/image'
-import backgroundBubbles from '../public/bubbles_background.png'
-import readingWomen from '../public/reading_women.png'
-import logo from '../public/finad_logo.png'
-import LogInButton from './components/buttons/LogIn'
-import SignInButton from './components/buttons/SignIn'
+import readingWomen from '../../public/reading_women.png'
+import Header from '../components/Header'
+import LogInButton from '../components/buttons/LogIn'
+import SignInButton from '../components/buttons/SignIn'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -21,38 +20,6 @@ const Wrapper = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-`
-const Header = styled.header`
-  max-width: 1440px;
-  margin-top: 44px;
-  width: 90%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1;
-`
-
-const Nav = styled.nav`
-  margin-left: 15%;
-
-  @media (max-width: 1000px) {
-    display: none;
-  }
-`
-
-const Link = styled.a`
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 33px;
-  margin: 16px;
-  color: black;
-  cursor: pointer;
-
-  &:hover {
-    border-bottom: 1px solid black;
-  }
 `
 
 const Container = styled.div`
@@ -104,31 +71,7 @@ export default function Home() {
   return (
     <>
       <Wrapper>
-        <Header>
-          <Image
-            alt="finad"
-            src={logo}
-            layout="fixed"
-            width={128}
-            height={40}
-          />
-          <Nav>
-            <NextLink href="/">
-              <Link>Home</Link>
-            </NextLink>
-            <NextLink href="/about">
-              <Link>Sobre</Link>
-            </NextLink>
-            <NextLink href="/pricing">
-              <Link>Preços</Link>
-            </NextLink>
-            <NextLink href="/how">
-              <Link>Como Usar</Link>
-            </NextLink>
-          </Nav>
-          <LogInButton>ENTRAR</LogInButton>
-        </Header>
-
+        <Header />
         <Container>
           <TextContainer>
             <Title>
@@ -143,8 +86,12 @@ export default function Home() {
               só lugar.
             </SubText>
             <ButtonsContainer>
-              <LogInButton>ENTRAR</LogInButton>
-              <SignInButton>CADASTRAR</SignInButton>
+              <NextLink href='/login'>
+                <LogInButton>ENTRAR</LogInButton>
+              </NextLink>
+              <NextLink href='/register'>
+                <SignInButton>CADASTRAR</SignInButton>
+              </NextLink>
             </ButtonsContainer>
           </TextContainer>
 

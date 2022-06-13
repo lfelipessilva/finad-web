@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 
 const LogInButton = styled.button`
-   background: ${props => props.theme.colors.primary};
+   background: ${props => props.theme.primary};
    color: white;
    font-weight: 600;
    letter-spacing: 1px;
