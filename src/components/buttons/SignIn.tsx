@@ -8,7 +8,7 @@ const SignInButton = styled.button`
    letter-spacing: 0.8px;
    line-height: 44px;
    border: 0;
-   min-width: 190px;
+   width: 170px;
    height: 60px;
    font-size: 1.4rem;
    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);

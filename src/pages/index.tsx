@@ -33,8 +33,8 @@ const Container = styled.div`
    padding: 20px;
 
    @media (max-width: 800px) {
-      margin-top: 16%;
       flex-direction: column;
+      padding: 0;
    }
 `
 
@@ -53,7 +53,7 @@ const SubText = styled.p`
    font-size: 16px;
    line-height: 24px;
    color: rgba(0, 0, 0, 0.8);
-   padding: 40px 0px 30px 0px;
+   padding: 10px 0px 50px 0px;
 `
 
 const ButtonsContainer = styled.div`

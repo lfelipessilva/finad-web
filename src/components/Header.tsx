@@ -12,6 +12,10 @@ const Container = styled.header`
    justify-content: space-between;
    align-items: center;
    z-index: 1;
+
+   @media (max-width: 768px) {
+      margin-top: 12px;
+   }
 `
 
 const Nav = styled.nav`
