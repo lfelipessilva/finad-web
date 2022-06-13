@@ -20,8 +20,5 @@ const LogInButton = styled.button`
       filter: brightness(90%);
    }
 `
-// const LogInButton = () => {
-
-// }
 
 export default LogInButton

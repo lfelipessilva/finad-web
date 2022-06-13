@@ -10,45 +10,45 @@ import Input from '../../components/Input'
 import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: -1;
-  background-image: url('./bubbles_background.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   z-index: -1;
+   background-image: url('./bubbles_background.png');
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center center;
 `
 
 const Container = styled.div`
-  width: 90%;
-  max-width: 1440px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1;
-  margin-top: 50px;
-  padding: 20px;
+   width: 90%;
+   max-width: 1440px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   z-index: 1;
+   margin-top: 50px;
+   padding: 20px;
 
-  @media (max-width: 800px) {
-    margin-top: 16%;
-    flex-direction: column;
-  }
+   @media (max-width: 800px) {
+      margin-top: 16%;
+      flex-direction: column;
+   }
 `
 
 const TextContainer = styled.div`
-  margin-top: 40px;
+   margin-top: 40px;
 `
 
 const Title = styled.p`
-  font-weight: 600;
-  font-size: 48px;
-  line-height: 3.5rem;
+   font-weight: 600;
+   font-size: 48px;
+   line-height: 3.5rem;
 `
 
 const FormContainer = styled.div`
@@ -62,17 +62,17 @@ const FormContainer = styled.div`
 
 
 const ButtonsContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  flex-direction: column;
-  gap: 20px;
+   display: flex;
+   width: 100%;
+   justify-content: center;
+   flex-direction: column;
+   gap: 20px;
 `
 
 const ImageContainer = styled.div`
-  @media (max-width: 800px) {
-    display: none;
-  }
+   @media (max-width: 800px) {
+      display: none;
+   }
 `
 
 const NameInputs = styled.div`
@@ -81,12 +81,14 @@ const NameInputs = styled.div`
    gap: 20px;
    max-width: 360px;
 `
+
 const NoAccount = styled.p`
    width: 100%;
    text-align: center;
    font-size: 16px;
    font-weight: 600;
 `
+
 export default function Home() {
    return (
       <>

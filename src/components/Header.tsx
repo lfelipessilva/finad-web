@@ -5,36 +5,36 @@ import styled from 'styled-components'
 import LogInButton from './buttons/LogIn'
 
 const Container = styled.header`
-  max-width: 1440px;
-  margin-top: 44px;
-  width: 90%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1;
+   max-width: 1440px;
+   margin-top: 44px;
+   width: 90%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   z-index: 1;
 `
 
 const Nav = styled.nav`
-  margin-left: 15%;
+   margin-left: 15%;
 
-  @media (max-width: 1000px) {
-    display: none;
-  }
+   @media (max-width: 1000px) {
+      display: none;
+   }
 `
 
 const Link = styled.a`
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 33px;
-  margin: 16px;
-  color: black;
-  cursor: pointer;
+   font-family: Open Sans;
+   font-style: normal;
+   font-weight: 400;
+   font-size: 24px;
+   line-height: 33px;
+   margin: 16px;
+   color: black;
+   cursor: pointer;
 
-  &:hover {
-    border-bottom: 1px solid black;
-  }
+   &:hover {
+      border-bottom: 1px solid black;
+   }
 `
 
 const Header = () => {
