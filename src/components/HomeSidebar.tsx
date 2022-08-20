@@ -22,32 +22,32 @@ const NavElement = styled.div`
 `
 
 const HomeSidebar = () => {
-	return (
-		<Container>
-			<nav>
-				<NavElement>
-					<NextLink href=''>
-						<ArrowRight size={16} weight={'bold'} />&nbsp;Home
-					</NextLink>
-				</NavElement>
-				<NavElement>
-					<NextLink href='/about'>
-						<ArrowRight size={16} weight={'bold'} />&nbsp;Sobre
-					</NextLink>
-				</NavElement>
-				<NavElement>
-					<NextLink href='/pricing'>
-						<ArrowRight size={16} weight={'bold'} />&nbsp;Preços
-					</NextLink>
-				</NavElement>
-				<NavElement>
-					<NextLink href='/how'>
-						<ArrowRight size={16} weight={'bold'} />&nbsp;Como Usar
-					</NextLink>
-				</NavElement>
-			</nav>
-		</Container>
-	)
+  return (
+    <Container>
+      <nav>
+        <NavElement>
+          <NextLink href=''>
+            <ArrowRight size={16} weight={'bold'} />&nbsp;Home
+          </NextLink>
+        </NavElement>
+        <NavElement>
+          <NextLink href='/about'>
+            <ArrowRight size={16} weight={'bold'} />&nbsp;Sobre
+          </NextLink>
+        </NavElement>
+        <NavElement>
+          <NextLink href='/pricing'>
+            <ArrowRight size={16} weight={'bold'} />&nbsp;Preços
+          </NextLink>
+        </NavElement>
+        <NavElement>
+          <NextLink href='/how'>
+            <ArrowRight size={16} weight={'bold'} />&nbsp;Como Usar
+          </NextLink>
+        </NavElement>
+      </nav>
+    </Container>
+  )
 }
 
 export default HomeSidebar

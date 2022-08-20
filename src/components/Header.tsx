@@ -42,39 +42,39 @@ const Link = styled.a`
 `
 
 const Header = () => {
-   return (
-      <Container>
-         <NextLink href='/'>
-            <Image
-               alt="finad"
-               src={logo}
-               layout="fixed"
-               width={128}
-               height={40}
-               style={{
-                  cursor: 'pointer'
-               }}
-            />
-         </NextLink>
-         <Nav>
-            <NextLink href="/">
-               <Link>Home</Link>
-            </NextLink>
-            <NextLink href="/about">
-               <Link>Sobre</Link>
-            </NextLink>
-            <NextLink href="/pricing">
-               <Link>Preços</Link>
-            </NextLink>
-            <NextLink href="/how">
-               <Link>Como Usar</Link>
-            </NextLink>
-         </Nav>
-         <NextLink href='/login'>
-            <LogInButton>ENTRAR</LogInButton>
-         </NextLink>
-      </Container>
-   )
+  return (
+    <Container>
+      <NextLink href='/'>
+        <Image
+          alt="finad"
+          src={logo}
+          layout="fixed"
+          width={128}
+          height={40}
+          style={{
+            cursor: 'pointer'
+          }}
+        />
+      </NextLink>
+      <Nav>
+        <NextLink href="/">
+          <Link>Home</Link>
+        </NextLink>
+        <NextLink href="/about">
+          <Link>Sobre</Link>
+        </NextLink>
+        <NextLink href="/pricing">
+          <Link>Preços</Link>
+        </NextLink>
+        <NextLink href="/how">
+          <Link>Como Usar</Link>
+        </NextLink>
+      </Nav>
+      <NextLink href='/login'>
+        <LogInButton>ENTRAR</LogInButton>
+      </NextLink>
+    </Container>
+  )
 }
 
 export default Header

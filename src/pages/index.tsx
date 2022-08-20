@@ -69,44 +69,44 @@ const ImageContainer = styled.div`
    }
 `
 export default function Home() {
-   return (
-      <>
-         {/* <HomeSidebar /> */}
-         <Wrapper>
-            <Header />
-            <Container>
-               <TextContainer>
-                  <Title>
+  return (
+    <>
+      {/* <HomeSidebar /> */}
+      <Wrapper>
+        <Header />
+        <Container>
+          <TextContainer>
+            <Title>
                      Se organize<br />
                      Como<br />
                      Em Nenhum<br />
                      Outro Lugar
-                  </Title>
-                  <SubText>
+            </Title>
+            <SubText>
                      Sua vida financeira organizada<br />
                      de maneira completa, em 1<br />
                      só lugar.
-                  </SubText>
-                  <ButtonsContainer>
-                     <NextLink href='/login'>
-                        <LogInButton>ENTRAR</LogInButton>
-                     </NextLink>
-                     <NextLink href='/register'>
-                        <SignInButton>CADASTRAR</SignInButton>
-                     </NextLink>
-                  </ButtonsContainer>
-               </TextContainer>
+            </SubText>
+            <ButtonsContainer>
+              <NextLink href='/login'>
+                <LogInButton>ENTRAR</LogInButton>
+              </NextLink>
+              <NextLink href='/register'>
+                <SignInButton>CADASTRAR</SignInButton>
+              </NextLink>
+            </ButtonsContainer>
+          </TextContainer>
 
-               <ImageContainer>
-                  <Image
-                     src={readingWomen}
-                     alt="reading women"
-                     width={700}
-                     height={634}
-                  />
-               </ImageContainer>
-            </Container>
-         </Wrapper>
-      </>
-   )
+          <ImageContainer>
+            <Image
+              src={readingWomen}
+              alt="reading women"
+              width={700}
+              height={634}
+            />
+          </ImageContainer>
+        </Container>
+      </Wrapper>
+    </>
+  )
 }

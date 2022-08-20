@@ -8,6 +8,7 @@ import SignInButton from '../../components/buttons/SignIn'
 import { GoogleLogo } from 'phosphor-react'
 import Input from '../../components/Input'
 import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
+import { FormEvent, useState } from 'react'
 
 const Wrapper = styled.div`
    width: 100%;
@@ -51,7 +52,7 @@ const Title = styled.p`
    line-height: 3.5rem;
 `
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
    margin-top: 16px;
    display: flex;
    flex-direction: column;
@@ -90,65 +91,97 @@ const NoAccount = styled.p`
 `
 
 export default function Home() {
-   return (
-      <>
-         <Wrapper>
-            <Header />
-            <Container>
-               <FormContainer>
-                  <Title>
-                     Comece a se< br />
-                     Organizar!
-                  </Title>
-                  <NameInputs>
-                     <Input
-                        type="text"
-                        placeholder="Nome"
-                        style={{
-                           width: '50%'
-                        }}
-                     />
-                     <Input
-                        type="text"
-                        placeholder="Sobrenome"
-                        style={{
-                           width: '50%'
-                        }}
-                     />
-                  </NameInputs>
-                  <Input
-                     type="email"
-                     placeholder="Email"
-                  />
-                  <Input
-                     type="password"
-                     placeholder="Senha"
-                  />
-                  <ButtonsContainer>
-                     <LogInButton style={{ width: "100%" }}>CRIAR CONTA</LogInButton>
-                     <SignInWithGoogleButton style={{ width: "100%" }}>
-                        <GoogleLogo size={24} weight={'bold'} />
-                        LOGIN COM GOOGLE
-                     </SignInWithGoogleButton>
-                  </ButtonsContainer>
-                  <NoAccount>
-                     já tem uma conta?&nbsp;
-                     <NextLink href='/login'>
-                        entre aqui
-                     </NextLink>
-                  </NoAccount>
-               </FormContainer>
 
-               <ImageContainer>
-                  <Image
-                     src={readingWomen}
-                     alt="reading women"
-                     width={700}
-                     height={634}
-                  />
-               </ImageContainer>
-            </Container>
-         </Wrapper>
-      </>
-   )
+  const [name, setName] = useState<string>('')
+  const [lastName, setLastName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+
+  const submitForm = async (e: FormEvent) => {
+    e.preventDefault();
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_ENTRYPOINT}/user`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: `${name} ${lastName}`,
+        email: email,
+        password: password
+      })
+    });
+  }
+
+  return (
+    <>
+      <Wrapper>
+        <Header />
+        <Container>
+          <FormContainer onSubmit={submitForm}>
+            <Title>
+              Comece a se< br />
+              Organizar!
+            </Title>
+            <NameInputs>
+              <Input
+                type="text"
+                placeholder="Nome"
+                name="name"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                style={{
+                  width: '50%'
+                }}
+              />
+              <Input
+                type="text"
+                placeholder="Sobrenome"
+                value={lastName}
+                onChange={e => setLastName(e.target.value)}
+                style={{
+                  width: '50%'
+                }}
+              />
+            </NameInputs>
+            <Input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+            <ButtonsContainer>
+              <LogInButton style={{ width: "100%" }} type="submit">CRIAR CONTA</LogInButton>
+              <SignInWithGoogleButton style={{ width: "100%" }}>
+                <GoogleLogo size={24} weight={'bold'} />
+                LOGIN COM GOOGLE
+              </SignInWithGoogleButton>
+            </ButtonsContainer>
+            <NoAccount>
+              já tem uma conta?&nbsp;
+              <NextLink href='/login'>
+                entre aqui
+              </NextLink>
+            </NoAccount>
+          </FormContainer>
+
+          <ImageContainer>
+            <Image
+              src={readingWomen}
+              alt="reading women"
+              width={700}
+              height={634}
+            />
+          </ImageContainer>
+        </Container>
+      </Wrapper>
+    </>
+  )
 }

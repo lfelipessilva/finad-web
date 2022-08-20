@@ -82,49 +82,49 @@ const NoAccount = styled.p`
    font-weight: 600;
 `
 export default function Home() {
-   return (
-      <>
-         <Wrapper>
-            <Header />
-            <Container>
-               <FormContainer>
-                  <Title>
+  return (
+    <>
+      <Wrapper>
+        <Header />
+        <Container>
+          <FormContainer>
+            <Title>
                      Bem-vindo<br />
                      de volta!
-                  </Title>
-                  <Input
-                     type="email"
-                     placeholder="Email"
-                  />
-                  <Input
-                     type="password"
-                     placeholder="Senha"
-                  />
-                  <ButtonsContainer>
-                     <LogInButton style={{ width: "100%" }}>ENTRAR</LogInButton>
-                     <SignInWithGoogleButton style={{ width: "100%" }}>
-                        <GoogleLogo size={24} weight={'bold'} />
+            </Title>
+            <Input
+              type="email"
+              placeholder="Email"
+            />
+            <Input
+              type="password"
+              placeholder="Senha"
+            />
+            <ButtonsContainer>
+              <LogInButton style={{ width: "100%" }}>ENTRAR</LogInButton>
+              <SignInWithGoogleButton style={{ width: "100%" }}>
+                <GoogleLogo size={24} weight={'bold'} />
                         LOGIN COM GOOGLE
-                     </SignInWithGoogleButton>
-                  </ButtonsContainer>
-                  <NoAccount>
+              </SignInWithGoogleButton>
+            </ButtonsContainer>
+            <NoAccount>
                      ainda não tem conta?&nbsp;
-                     <NextLink href='/register'>
+              <NextLink href='/register'>
                         crie aqui
-                     </NextLink>
-                  </NoAccount>
-               </FormContainer>
+              </NextLink>
+            </NoAccount>
+          </FormContainer>
 
-               <ImageContainer>
-                  <Image
-                     src={readingWomen}
-                     alt="reading women"
-                     width={700}
-                     height={634}
-                  />
-               </ImageContainer>
-            </Container>
-         </Wrapper>
-      </>
-   )
+          <ImageContainer>
+            <Image
+              src={readingWomen}
+              alt="reading women"
+              width={700}
+              height={634}
+            />
+          </ImageContainer>
+        </Container>
+      </Wrapper>
+    </>
+  )
 }
