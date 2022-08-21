@@ -3,6 +3,9 @@ import Image from 'next/image'
 import logo from '../../public/finad_logo.png'
 import styled from 'styled-components'
 import LogInButton from './buttons/LogIn'
+import { List } from 'phosphor-react'
+import HomeSidebar from './HomeSidebar'
+import { useState } from 'react'
 
 const Container = styled.header`
    max-width: 1440px;
@@ -11,7 +14,6 @@ const Container = styled.header`
    display: flex;
    justify-content: space-between;
    align-items: center;
-   z-index: 1;
 
    @media (max-width: 768px) {
       margin-top: 12px;
@@ -37,11 +39,14 @@ const Link = styled.a`
    cursor: pointer;
 
    &:hover {
-      border-bottom: 1px solid black;
-   }
-`
+     border-bottom: 1px solid black;
+    }
+    `
 
 const Header = () => {
+
+  const [isHomeSidebarOpen, setIsHomeSidebarOpen] = useState<boolean>(false)
+
   return (
     <Container>
       <NextLink href='/'>
@@ -70,9 +75,22 @@ const Header = () => {
           <Link>Como Usar</Link>
         </NextLink>
       </Nav>
-      <NextLink href='/login'>
-        <LogInButton>ENTRAR</LogInButton>
-      </NextLink>
+
+      {isHomeSidebarOpen &&
+        <>
+          <div onClick={() => setIsHomeSidebarOpen(true)}>
+            <List size={32} />
+          </div>
+          <HomeSidebar
+            setIsHomeSidebarOpen={setIsHomeSidebarOpen}
+          />
+        </>
+      }
+      {!isHomeSidebarOpen &&
+        <NextLink href='/login'>
+          <LogInButton>ENTRAR</LogInButton>
+        </NextLink>
+      }
     </Container>
   )
 }

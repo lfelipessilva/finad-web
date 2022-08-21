@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import LogInButton from '../components/buttons/LogIn'
 import SignInButton from '../components/buttons/SignIn'
 import HomeSidebar from '../components/HomeSidebar'
+import { useState } from 'react'
 
 const Wrapper = styled.div`
    width: 100%;
@@ -71,21 +72,20 @@ const ImageContainer = styled.div`
 export default function Home() {
   return (
     <>
-      {/* <HomeSidebar /> */}
       <Wrapper>
         <Header />
         <Container>
           <TextContainer>
             <Title>
-                     Se organize<br />
-                     Como<br />
-                     Em Nenhum<br />
-                     Outro Lugar
+              Se organize<br />
+              Como<br />
+              Em Nenhum<br />
+              Outro Lugar
             </Title>
             <SubText>
-                     Sua vida financeira organizada<br />
-                     de maneira completa, em 1<br />
-                     só lugar.
+              Sua vida financeira organizada<br />
+              de maneira completa, em 1<br />
+              só lugar.
             </SubText>
             <ButtonsContainer>
               <NextLink href='/login'>
