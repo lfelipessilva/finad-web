@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 const LogInButton = styled.button`
    background: ${props => props.theme.primary};
    color: white;

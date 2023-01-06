@@ -89,8 +89,8 @@ export default function Home() {
         <Container>
           <FormContainer>
             <Title>
-                     Bem-vindo<br />
-                     de volta!
+              Bem-vindo<br />
+              de volta!
             </Title>
             <Input
               type="email"
@@ -104,13 +104,13 @@ export default function Home() {
               <LogInButton style={{ width: "100%" }}>ENTRAR</LogInButton>
               <SignInWithGoogleButton style={{ width: "100%" }}>
                 <GoogleLogo size={24} weight={'bold'} />
-                        LOGIN COM GOOGLE
+                LOGIN COM GOOGLE
               </SignInWithGoogleButton>
             </ButtonsContainer>
             <NoAccount>
-                     ainda não tem conta?&nbsp;
+              ainda não tem conta?&nbsp;
               <NextLink href='/register'>
-                        crie aqui
+                crie aqui
               </NextLink>
             </NoAccount>
           </FormContainer>

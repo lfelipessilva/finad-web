@@ -39,8 +39,7 @@ const NavElement = styled.div`
   }
 `
 
-const HomeSidebar = ({setIsHomeSidebarOpen}: any) => {
-
+const HomeSidebar = ({ setIsHomeSidebarOpen }: any) => {
   return (
     <Container>
       <CloseIcoinContainer onClick={() => setIsHomeSidebarOpen(false)}>
