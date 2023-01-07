@@ -89,9 +89,6 @@ export default function Home() {
     const teste = async () => {
       await fetch(`https://api.finad.devluis.tech/user`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        },
       });
     }
 
