@@ -105,6 +105,7 @@ export default function Home() {
     await fetch(`https://api.finad.devluis.tech/user`, {
       method: 'POST',
       headers: {
+        'Access-Control-Allow-Origin': 'https://api.finad.devluis.tech',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
