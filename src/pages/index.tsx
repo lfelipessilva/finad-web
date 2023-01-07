@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import styled from 'styled-components'
+import Head from 'next/head'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import readingWomen from '../../public/reading_women.png'
@@ -6,7 +8,6 @@ import Header from '../components/Header'
 import LogInButton from '../components/buttons/LogIn'
 import SignInButton from '../components/buttons/SignIn'
 import HomeSidebar from '../components/HomeSidebar'
-import { useState } from 'react'
 
 const Wrapper = styled.div`
    width: 100%;
@@ -72,6 +73,9 @@ const ImageContainer = styled.div`
 export default function Home() {
   return (
     <>
+    <Head>
+      <title>Finad | Home</title>
+    </Head>
       <Wrapper>
         <Header />
         <Container>

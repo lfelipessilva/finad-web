@@ -8,6 +8,7 @@ import SignInButton from '../../components/buttons/SignIn'
 import { GoogleLogo } from 'phosphor-react'
 import Input from '../../components/Input'
 import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
+import Head from 'next/head'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -45,13 +46,13 @@ const TextContainer = styled.div`
   margin-top: 40px;
 `
 
-const Title = styled.p`
+const Title = styled.h2`
   font-weight: 600;
   font-size: 48px;
   line-height: 3.5rem;
 `
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
    margin-top: 16px;
    display: flex;
    flex-direction: column;
@@ -84,6 +85,9 @@ const NoAccount = styled.p`
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>Finad | Entrar</title>
+      </Head>
       <Wrapper>
         <Header />
         <Container>

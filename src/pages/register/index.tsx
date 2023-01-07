@@ -9,6 +9,7 @@ import { GoogleLogo } from 'phosphor-react'
 import Input from '../../components/Input'
 import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
 import { FormEvent, useState } from 'react'
+import Head from 'next/head'
 
 const Wrapper = styled.div`
    width: 100%;
@@ -116,6 +117,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Finad | Cadastrar</title>
+      </Head>
       <Wrapper>
         <Header />
         <Container>
