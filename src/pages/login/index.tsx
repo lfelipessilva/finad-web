@@ -87,7 +87,7 @@ export default function Home() {
 
   useEffect(() => {
     const teste = async () => {
-      await fetch(`https://api.finad.devluis.tech`, {
+      await fetch(`https://api.finad.devluis.tech/user`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
