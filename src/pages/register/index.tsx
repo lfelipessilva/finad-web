@@ -101,7 +101,7 @@ export default function Home() {
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENTRYPOINT}/user`, {
+    await fetch(`https://api.finad.devluis.tech/user`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
