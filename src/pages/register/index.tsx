@@ -104,11 +104,6 @@ export default function Home() {
 
     await fetch(`https://api.finad.devluis.tech/user`, {
       method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify({
         name: `${name} ${lastName}`,
         email: email,
