@@ -104,6 +104,10 @@ export default function Home() {
 
     await fetch(`https://api.finad.devluis.tech/user`, {
       method: 'POST',
+      headers: {
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'cross-origin'
+      },
       body: JSON.stringify({
         name: `${name} ${lastName}`,
         email: email,
