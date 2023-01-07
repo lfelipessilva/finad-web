@@ -73,9 +73,9 @@ const ImageContainer = styled.div`
 export default function Home() {
   return (
     <>
-    <Head>
-      <title>Finad | Home</title>
-    </Head>
+      <Head>
+        <title>Finad | Home</title>
+      </Head>
       <Wrapper>
         <Header />
         <Container>
