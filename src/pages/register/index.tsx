@@ -101,7 +101,7 @@ export default function Home() {
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
 
-    await fetch(`https://api.finad.devluis.tech/user`, {
+    await fetch(`https://api.finad.devluis.tech/user?email=${email}`, {
       method: 'POST',
       body: JSON.stringify({
         name: `${name} ${lastName}`,
