@@ -9,6 +9,7 @@ import { GoogleLogo } from 'phosphor-react'
 import Input from '../../components/Input'
 import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
 import Head from 'next/head'
+import { useEffect } from 'react'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -83,6 +84,19 @@ const NoAccount = styled.p`
    font-weight: 600;
 `
 export default function Home() {
+
+  useEffect(() => {
+    const teste = async () => {
+      await fetch(`https://api.finad.devluis.tech`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+    }
+
+    teste()
+  }, [])
   return (
     <>
       <Head>
