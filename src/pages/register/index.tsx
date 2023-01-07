@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import NextLink from 'next/link'
 import Image from 'next/image'
+import axios from 'axios'
 import readingWomen from '../../../public/reading_women.png'
 import Header from '../../components/Header'
 import LogInButton from '../../components/buttons/LogIn'
@@ -101,8 +102,11 @@ export default function Home() {
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
 
-    await fetch(`https://api.finad.devluis.tech/user`, {
+    await fetch(`http://localhost:8888/user`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         name: `${name} ${lastName}`,
         email: email,
