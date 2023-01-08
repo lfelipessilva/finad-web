@@ -2,7 +2,7 @@ import axios from "axios";
 import {User, SignUpUserProps, SignInUserProps} from "../types/User";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8888",
+  baseURL: process.env.NEXT_PUBLIC_API_ROUTE,
   headers: {
     "Content-type": "application/json",
   },
