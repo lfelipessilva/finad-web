@@ -84,10 +84,10 @@ const NoAccount = styled.p`
    font-weight: 600;
 `
 export default function Home() {
-
+  // htt
   useEffect(() => {
     const teste = async () => {
-      await fetch(`${process.env.NEXT_PUBLIC_API_ENTRYPOINT}/user`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/user`, {
         method: 'GET',
       });
     }
