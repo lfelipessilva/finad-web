@@ -10,6 +10,10 @@ import Input from '../../components/Input'
 import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
 import Head from 'next/head'
 import { useEffect } from 'react'
+import { Form } from '@unform/web'
+import { SignInUserProps } from '../../types/User'
+import { useMutation } from 'react-query'
+import UserService from '../../services/userServices'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -53,7 +57,7 @@ const Title = styled.h2`
   line-height: 3.5rem;
 `
 
-const FormContainer = styled.form`
+const FormContainer = styled(Form)`
    margin-top: 16px;
    display: flex;
    flex-direction: column;
@@ -61,7 +65,6 @@ const FormContainer = styled.form`
    max-width: 360px;
    gap: 24px;
 `
-
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -83,17 +86,18 @@ const NoAccount = styled.p`
    font-size: 16px;
    font-weight: 600;
 `
-export default function Home() {
-  // htt
-  useEffect(() => {
-    const teste = async () => {
-      await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/user`, {
-        method: 'GET',
-      });
-    }
 
-    teste()
-  }, [])
+export default function Home() {
+  const loginUser = useMutation((user: SignInUserProps) => {
+    return UserService.signIn(user)
+    
+  })
+
+  const handleSubmit = (data: SignInUserProps) => {
+    const loggedInUser = loginUser.mutate(data)
+    console.log(loginUser.isSuccess)
+  }
+
   return (
     <>
       <Head>
@@ -102,16 +106,18 @@ export default function Home() {
       <Wrapper>
         <Header />
         <Container>
-          <FormContainer>
+          <FormContainer onSubmit={handleSubmit}>
             <Title>
               Bem-vindo<br />
               de volta!
             </Title>
             <Input
+              name="email"
               type="email"
               placeholder="Email"
             />
             <Input
+              name="password"
               type="password"
               placeholder="Senha"
             />

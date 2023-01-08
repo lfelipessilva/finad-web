@@ -1,16 +1,19 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 import NextLink from 'next/link'
 import Image from 'next/image'
-import axios from 'axios'
+import axios, { Axios } from 'axios'
 import readingWomen from '../../../public/reading_women.png'
 import Header from '../../components/Header'
 import LogInButton from '../../components/buttons/LogIn'
-import SignInButton from '../../components/buttons/SignIn'
 import { GoogleLogo } from 'phosphor-react'
 import Input from '../../components/Input'
 import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
-import { FormEvent, useState } from 'react'
 import Head from 'next/head'
+import { useMutation } from 'react-query'
+import { Form } from '@unform/web'
+import { SignUpUserProps } from '../../types/User'
+import UserService from '../../services/userServices'
 
 const Wrapper = styled.div`
    width: 100%;
@@ -54,7 +57,7 @@ const Title = styled.p`
    line-height: 3.5rem;
 `
 
-const FormContainer = styled.form`
+const FormContainer = styled(Form)`
    margin-top: 16px;
    display: flex;
    flex-direction: column;
@@ -92,32 +95,16 @@ const NoAccount = styled.p`
    font-weight: 600;
 `
 
+
 export default function Home() {
+  const createUser = useMutation((user: SignUpUserProps) => {
+    return UserService.signUp(user)
+    
+  })
 
-  const [name, setName] = useState<string>('')
-  const [lastName, setLastName] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-
-  const submitForm = async (e: FormEvent) => {
-    e.preventDefault();
-
-    axios.post(`${process.env.NEXT_PUBLIC_API_ROUTE}/user`, {
-      name: `${name} ${lastName}`,
-      email: email,
-      password: password
-    })
-    await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/user`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: `${name} ${lastName}`,
-        email: email,
-        password: password
-      })
-    });
+  const handleSubmit = (data: SignUpUserProps) => {
+    const createdUser = createUser.mutate(data)
+    console.log(createUser.isSuccess)
   }
 
   return (
@@ -128,7 +115,7 @@ export default function Home() {
       <Wrapper>
         <Header />
         <Container>
-          <FormContainer onSubmit={submitForm}>
+          <FormContainer onSubmit={handleSubmit}>
             <Title>
               Comece a se< br />
               Organizar!
@@ -138,33 +125,28 @@ export default function Home() {
                 type="text"
                 placeholder="Nome"
                 name="name"
-                value={name}
-                onChange={e => setName(e.target.value)}
                 style={{
                   width: '50%'
                 }}
               />
               <Input
+                name="lastName"
                 type="text"
                 placeholder="Sobrenome"
-                value={lastName}
-                onChange={e => setLastName(e.target.value)}
                 style={{
                   width: '50%'
                 }}
               />
             </NameInputs>
             <Input
+              name="email"
               type="email"
               placeholder="Email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
             />
             <Input
+              name="password"
               type="password"
               placeholder="Senha"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
             />
             <ButtonsContainer>
               <LogInButton style={{ width: "100%" }} type="submit">CRIAR CONTA</LogInButton>
