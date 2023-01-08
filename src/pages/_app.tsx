@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app'
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-
+import { QueryClient, QueryClientProvider } from 'react-query'
 const GlobalStyle = createGlobalStyle`
    html { 
    font-family: Open sans, sans-serif;
@@ -21,11 +21,16 @@ const theme = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  const queryClient = new QueryClient()
+
   return (
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <Component {...pageProps} />
+        </QueryClientProvider>
       </ThemeProvider>
     </>
   )
