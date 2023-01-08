@@ -102,12 +102,12 @@ export default function Home() {
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
 
-    axios.post(`${process.env.NEXT_PUBLIC_API_ENTRYPOINT}/user`, {
+    axios.post(`${process.env.NEXT_PUBLIC_API_ROUTE}/user`, {
       name: `${name} ${lastName}`,
       email: email,
       password: password
     })
-    await fetch(`${process.env.NEXT_PUBLIC_API_ENTRYPOINT}/user`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_ROUTE}/user`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
