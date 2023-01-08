@@ -13,7 +13,7 @@ import { useEffect } from 'react'
 import { Form } from '@unform/web'
 import { SignInUserProps } from '../../types/User'
 import { useMutation } from 'react-query'
-import UserService from '../../services/userServices'
+import AuthService from '../../services/authService'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -89,8 +89,7 @@ const NoAccount = styled.p`
 
 export default function Home() {
   const loginUser = useMutation((user: SignInUserProps) => {
-    return UserService.signIn(user)
-    
+    return AuthService.signIn(user)
   })
 
   const handleSubmit = (data: SignInUserProps) => {

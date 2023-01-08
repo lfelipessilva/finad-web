@@ -1,5 +1,5 @@
 import axios from "axios";
-import {User, SignUpUserProps, SignInUserProps} from "../types/User";
+import { User, SignUpUserProps } from "../types/User";
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_ROUTE,
@@ -8,44 +8,38 @@ const apiClient = axios.create({
   },
 });
 
-const signUp = async (signUpUser: SignUpUserProps) => {
+const createUser = async (signUpUser: SignUpUserProps) => {
   const response = await apiClient.post<any>("/user", signUpUser);
-  return response.data;
-}
-
-const signIn = async (signInUser: SignInUserProps) => {
-  const response = await apiClient.post<any>("/user/auth", signInUser);
-  return response.data;
+  return response;
 }
 
 const findAll = async () => {
   const response = await apiClient.get<User[]>("/user");
-  return response.data;
+  return response;
 }
 
 const findById = async (id: string) => {
   const response = await apiClient.get<User>(`/user/${id}`);
-  return response.data;
+  return response;
 }
 
 const update = async (id: string, { name, lastName }: User) => {
   const response = await apiClient.put<any>(`/user/${id}`, { name, lastName });
-  return response.data;
+  return response;
 }
 
 const deleteById = async (id: string) => {
   const response = await apiClient.delete<any>(`/user/${id}`);
-  return response.data;
+  return response;
 }
 
 const deleteAll = async () => {
   const response = await apiClient.delete<any>("/user");
-  return response.data;
+  return response;
 }
 
 const UserService = {
-  signUp,
-  signIn,
+  createUser,
   findAll,
   findById,
   update,

@@ -12,8 +12,9 @@ import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
 import Head from 'next/head'
 import { useMutation } from 'react-query'
 import { Form } from '@unform/web'
-import { SignUpUserProps } from '../../types/User'
-import UserService from '../../services/userServices'
+import { SignUpUserProps,  SignInUserProps } from '../../types/User'
+import UserService from '../../services/userService'
+import AuthService from '../../services/authService'
 
 const Wrapper = styled.div`
    width: 100%;
@@ -98,13 +99,22 @@ const NoAccount = styled.p`
 
 export default function Home() {
   const createUser = useMutation((user: SignUpUserProps) => {
-    return UserService.signUp(user)
-    
+    return UserService.createUser(user)
   })
 
-  const handleSubmit = (data: SignUpUserProps) => {
-    const createdUser = createUser.mutate(data)
-    console.log(createUser.isSuccess)
+  const authenticateUser = useMutation((user: SignInUserProps) => {
+    return AuthService.signIn(user)
+  })
+
+  const handleSubmit = async (data: SignUpUserProps) => {
+    try {
+      const createUserResponse = await createUser.mutateAsync(data)
+      if (createUserResponse.status === 201) {
+        const authenticateUserResponse = authenticateUser.mutateAsync({ email: data.email, password: data.password })
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
