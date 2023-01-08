@@ -87,7 +87,7 @@ export default function Home() {
 
   useEffect(() => {
     const teste = async () => {
-      await fetch(`https://api.finad.devluis.tech/user`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_ENTRYPOINT}/user`, {
         method: 'GET',
       });
     }
