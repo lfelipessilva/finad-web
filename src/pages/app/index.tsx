@@ -5,16 +5,17 @@ import readingWomen from '../../../public/reading_women.png'
 import Header from '../../components/Header'
 import LogInButton from '../../components/buttons/LogIn'
 import SignInButton from '../../components/buttons/SignIn'
-import { GoogleLogo } from 'phosphor-react'
+import { CookingPot, GoogleLogo } from 'phosphor-react'
 import Input from '../../components/Input'
 import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { Form } from '@unform/web'
 import { SignInUserProps } from '../../types/User'
-import { useMutation } from 'react-query'
+import { useMutation, dehydrate, QueryClient, useQuery } from 'react-query'
 import AuthService from '../../services/authService'
 import Router from 'next/router'
+import IncomeService from '../../services/incomeService'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -88,17 +89,11 @@ const NoAccount = styled.p`
    font-weight: 600;
 `
 
-export default function Home() {
-  const loginUser = useMutation((user: SignInUserProps) => {
-    return AuthService.signIn(user)
-  })
+export default function Home(props: any) {
 
-  const handleSubmit = async (data: SignInUserProps) => {
-    const loggedInUser = await loginUser.mutateAsync(data)
-    if(loggedInUser.status === 201) {
-      return Router.push('/app')
-    }
-  }
+  const { data } = useQuery("incomes", () =>
+    IncomeService.findAll()
+  );
 
   return (
     <>
@@ -107,47 +102,31 @@ export default function Home() {
       </Head>
       <Wrapper>
         <Header />
-        <Container>
-          <FormContainer onSubmit={handleSubmit}>
-            <Title>
-              Bem-vindo<br />
-              de volta!
-            </Title>
-            <Input
-              name="email"
-              type="email"
-              placeholder="Email"
-            />
-            <Input
-              name="password"
-              type="password"
-              placeholder="Senha"
-            />
-            <ButtonsContainer>
-              <LogInButton style={{ width: "100%" }}>ENTRAR</LogInButton>
-              <SignInWithGoogleButton style={{ width: "100%" }}>
-                <GoogleLogo size={24} weight={'bold'} />
-                LOGIN COM GOOGLE
-              </SignInWithGoogleButton>
-            </ButtonsContainer>
-            <NoAccount>
-              ainda não tem conta?&nbsp;
-              <NextLink href='/register'>
-                crie aqui
-              </NextLink>
-            </NoAccount>
-          </FormContainer>
 
-          <ImageContainer>
-            <Image
-              src={readingWomen}
-              alt="reading women"
-              width={700}
-              height={634}
-            />
-          </ImageContainer>
-        </Container>
+        <ImageContainer>
+          <Image
+            src={readingWomen}
+            alt="reading women"
+            width={700}
+            height={634}
+          />
+        </ImageContainer>
       </Wrapper>
     </>
   )
+}
+
+export async function getStaticProps() {
+  const queryClient = new QueryClient()
+  // await queryClient.prefetchQuery('incomes')
+
+  await queryClient.prefetchQuery("incomes", () =>
+    IncomeService.findAll()
+  );
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  }
 }
