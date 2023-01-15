@@ -1,5 +1,6 @@
 import NextLink from 'next/link'
 import Image from 'next/image'
+import Router from 'next/router'
 import readingWomen from '../../../public/reading_women.png'
 import Header from '../../components/Header'
 import { GoogleLogo } from 'phosphor-react'
@@ -24,7 +25,11 @@ export default function Home() {
     try {
       const createUserResponse = await createUser.mutateAsync(data)
       if (createUserResponse.status === 201) {
-        const authenticateUserResponse = authenticateUser.mutateAsync({ email: data.email, password: data.password })
+        const authenticateUserResponse = await authenticateUser.mutateAsync({ email: data.email, password: data.password })
+
+        if (authenticateUserResponse.status === 201) {
+          return Router.push('/app')
+        }
       }
     } catch (error) {
       console.error(error)
