@@ -24,14 +24,20 @@ import { useMutation, dehydrate, QueryClient, useQuery } from 'react-query'
 import AuthService from '../../services/authService'
 import Router from 'next/router'
 import IncomeService from '../../services/incomeService'
-
-
+import ExpenseService from '../../services/expenseService'
+import { format} from 'date-fns'
 export default function Home(props: any) {
 
-  const { data } = useQuery("incomes", () =>
+  const { data: incomes } = useQuery("incomes", () =>
     IncomeService.findAll()
   );
+  const { data: expenses } = useQuery("expenses", () =>
+    ExpenseService.findAll()
+  );
 
+  console.log({ incomes, expenses });
+
+  const allData = [...incomes || [], ...expenses || []]
   return (
     <>
       <Head>
@@ -56,7 +62,7 @@ export default function Home(props: any) {
               </div>
             </div>
             <div className="flex flex-row items-center bg-secondary p-2 g-4 rounded-3xl w-3/12">
-              <ArrowCircleUpIcon size={48} className="text-unpaidRed"/>
+              <ArrowCircleUpIcon size={48} className="text-unpaidRed" />
               <div className="flex flex-col">
                 <h3 className="text-2xl text-white opacity-80">Despesas Totais:</h3>
                 <h2 className="text-3xl text-white">R$ 703,09</h2>
@@ -102,20 +108,25 @@ export default function Home(props: any) {
               </tr>
             </thead>
             <tbody className="table-row-group last:rounded-lg">
-              <tr className="bg-white border-b-1 table-row text-left ">
-                <td className="table-cell text-sm font-semibold p-4">Não pago</td>
-                <td className="table-cell text-sm font-semibold">Despesa</td>
-                <td className="table-cell text-sm font-semibold">05/07/2022</td>
-                <td className="table-cell text-sm font-semibold">Curso Udemy</td>
-                <td className="table-cell text-sm font-semibold">Educação</td>
-                <td className="table-cell text-sm font-semibold text-unpaidRed">R$37.99</td>
-                <td className="table-cell text-sm font-semibold">
-                  <div className="flex flex-row">
-                    <PencilIcon size={24} />
-                    <TrashIcon size={24} />
-                  </div>
-                </td>
-              </tr>
+              {allData.map((row, index) => {
+                return (
+                  <tr className="bg-white border-b-1 table-row text-left ">
+                    {/* <td className="table-cell text-sm font-semibold p-4">{row.status}</td> */}
+                    {/* <td className="table-cell text-sm font-semibold">{row.type}</td> */}
+                    <td className="table-cell text-sm font-semibold">{format(new Date(row.date), 'MM/dd/yyyy')}</td>
+                    <td className="table-cell text-sm font-semibold">{row.description}</td>
+                    {/* <td className="table-cell text-sm font-semibold">{row.category}</td> */}
+                    <td className="table-cell text-sm font-semibold text-unpaidRed">R${row.value}</td>
+                    <td className="table-cell text-sm font-semibold">
+                      <div className="flex flex-row">
+                        <PencilIcon size={24} />
+                        <TrashIcon size={24} />
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
+
               <tr className="bg-white border-b-1 table-row text-left ">
                 <td className="table-cell text-sm font-semibold p-4">Pago</td>
                 <td className="table-cell text-sm font-semibold">Despesa</td>
@@ -168,10 +179,13 @@ export default function Home(props: any) {
 
 export async function getStaticProps() {
   const queryClient = new QueryClient()
-  // await queryClient.prefetchQuery('incomes')
 
   await queryClient.prefetchQuery("incomes", () =>
     IncomeService.findAll()
+  );
+
+  await queryClient.prefetchQuery("expenses", () =>
+    ExpenseService.findAll()
   );
 
   return {
