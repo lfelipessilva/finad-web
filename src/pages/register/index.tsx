@@ -1,101 +1,15 @@
-import { useState } from 'react'
-import styled from 'styled-components'
 import NextLink from 'next/link'
 import Image from 'next/image'
-import axios, { Axios } from 'axios'
 import readingWomen from '../../../public/reading_women.png'
 import Header from '../../components/Header'
-import LogInButton from '../../components/buttons/LogIn'
 import { GoogleLogo } from 'phosphor-react'
 import Input from '../../components/Input'
-import SignInWithGoogleButton from '../../components/buttons/SignInWithGoogle'
 import Head from 'next/head'
 import { useMutation } from 'react-query'
 import { Form } from '@unform/web'
 import { SignUpUserProps,  SignInUserProps } from '../../types/User'
 import UserService from '../../services/userService'
 import AuthService from '../../services/authService'
-
-const Wrapper = styled.div`
-   width: 100%;
-   height: 100%;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   position: absolute;
-   height: 100%;
-   width: 100%;
-   z-index: -1;
-   background-image: url('./bubbles_background.png');
-   background-size: cover;
-   background-repeat: no-repeat;
-   background-position: center center;
-`
-
-const Container = styled.div`
-   width: 90%;
-   max-width: 1440px;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   z-index: 1;
-   margin-top: 50px;
-   padding: 20px;
-
-   @media (max-width: 800px) {
-      margin-top: 16%;
-      flex-direction: column;
-   }
-`
-
-const TextContainer = styled.div`
-   margin-top: 40px;
-`
-
-const Title = styled.p`
-   font-weight: 600;
-   font-size: 48px;
-   line-height: 3.5rem;
-`
-
-const FormContainer = styled(Form)`
-   margin-top: 16px;
-   display: flex;
-   flex-direction: column;
-   width: 100%;
-   max-width: 360px;
-   gap: 24px;
-`
-
-
-const ButtonsContainer = styled.div`
-   display: flex;
-   width: 100%;
-   justify-content: center;
-   flex-direction: column;
-   gap: 20px;
-`
-
-const ImageContainer = styled.div`
-   @media (max-width: 800px) {
-      display: none;
-   }
-`
-
-const NameInputs = styled.div`
-   display: flex;
-   flex-direction: row;
-   gap: 20px;
-   max-width: 360px;
-`
-
-const NoAccount = styled.p`
-   width: 100%;
-   text-align: center;
-   font-size: 16px;
-   font-weight: 600;
-`
-
 
 export default function Home() {
   const createUser = useMutation((user: SignUpUserProps) => {
@@ -122,15 +36,15 @@ export default function Home() {
       <Head>
         <title>Finad | Cadastrar</title>
       </Head>
-      <Wrapper>
+      <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen">
         <Header />
-        <Container>
-          <FormContainer onSubmit={handleSubmit}>
-            <Title>
+        <main className="flex flex-row w-full max-w-7xl justify-between items-center">
+          <Form onSubmit={handleSubmit} className="flex flex-col gap-4 w-80">
+            <h1 className="text-5xl font-semibold font-sans">
               Comece a se< br />
               Organizar!
-            </Title>
-            <NameInputs>
+            </h1>
+            <div className="flex flex-row gap-4">
               <Input
                 type="text"
                 placeholder="Nome"
@@ -147,7 +61,7 @@ export default function Home() {
                   width: '50%'
                 }}
               />
-            </NameInputs>
+            </div>
             <Input
               name="email"
               type="email"
@@ -158,31 +72,35 @@ export default function Home() {
               type="password"
               placeholder="Senha"
             />
-            <ButtonsContainer>
-              <LogInButton style={{ width: "100%" }} type="submit">CRIAR CONTA</LogInButton>
-              <SignInWithGoogleButton style={{ width: "100%" }}>
+            <div className="flex flex-col gap-4">
+              <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200">
+                CRIAR CONTA
+              </button>
+              <button className="flex flex-row items-center justify-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">
                 <GoogleLogo size={24} weight={'bold'} />
-                LOGIN COM GOOGLE
-              </SignInWithGoogleButton>
-            </ButtonsContainer>
-            <NoAccount>
+                CRIAR COM GOOGLE
+              </button>
+            </div>
+            <p className="text-center">
               já tem uma conta?&nbsp;
-              <NextLink href='/login'>
-                entre aqui
+              <NextLink href='/register'>
+                <span className="text-primary cursor-pointer hover:opacity-60">
+                  entre aqui
+                </span>
               </NextLink>
-            </NoAccount>
-          </FormContainer>
+            </p>
+          </Form>
 
-          <ImageContainer>
+          <div>
             <Image
               src={readingWomen}
               alt="reading women"
               width={700}
               height={634}
             />
-          </ImageContainer>
-        </Container>
-      </Wrapper>
+          </div>
+        </main>
+      </div>
     </>
   )
 }
