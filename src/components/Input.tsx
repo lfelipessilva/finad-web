@@ -21,29 +21,15 @@ export default function Input({ name, ...rest }: InputProps) {
 
   return (
     <>
-      <InputStyle
+      <input
         ref={inputRef}
         id={fieldName}
         defaultValue={defaultValue}
         {...rest}
+        className="border-2 border-primary bg-white rounded-md p-2 text-base focus:border-secondary"
       />
 
       {error && <span style={{ color: "#f00" }}>{error}</span>}
     </>
   );
 }
-
-const InputStyle = styled.input`
-   border: 0;
-   background: #FBFBFB;
-   border-radius: 8px;
-   padding: 9px 12px;
-   font-size: 16px;
-   border: 2px solid ${props => props.theme.primary};
-   outline: none;
-
-   &:focus {
-      border: 2px solid ${props => props.theme.secondary};
-      background: white;
-   }
-`
