@@ -27,10 +27,10 @@ export default function Home() {
             </p>
             <div className="flex flex-row gap-4">
               <NextLink href='/login'>
-                <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold">ENTRAR</button>
+                <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200">ENTRAR</button>
               </NextLink>
               <NextLink href='/register'>
-                <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold">CADASTRAR</button>
+                <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">CADASTRAR</button>
               </NextLink>
             </div>
           </div>

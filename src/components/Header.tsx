@@ -60,7 +60,7 @@ const Header = () => {
       }
       {!isHomeSidebarOpen &&
         <NextLink href='/login'>
-          <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold">ENTRAR</button>
+          <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200">ENTRAR</button>
         </NextLink>
       }
     </div>
