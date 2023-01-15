@@ -7,48 +7,12 @@ import { List } from 'phosphor-react'
 import HomeSidebar from './HomeSidebar'
 import { useState } from 'react'
 
-const Container = styled.header`
-   max-width: 1440px;
-   margin-top: 44px;
-   width: 90%;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-
-   @media (max-width: 768px) {
-      margin-top: 12px;
-   }
-`
-
-const Nav = styled.nav`
-   margin-left: 15%;
-
-   @media (max-width: 1000px) {
-      display: none;
-   }
-`
-
-const Link = styled.a`
-   font-family: Open Sans;
-   font-style: normal;
-   font-weight: 400;
-   font-size: 24px;
-   line-height: 33px;
-   margin: 16px;
-   color: black;
-   cursor: pointer;
-
-   &:hover {
-     border-bottom: 1px solid black;
-    }
-    `
-
 const Header = () => {
 
   const [isHomeSidebarOpen, setIsHomeSidebarOpen] = useState<boolean>(false)
 
   return (
-    <Container>
+    <div className="flex flex-row justify-between items-center max-w-7xl p-4 w-full">
       <NextLink href='/'>
         <Image
           alt="finad"
@@ -61,20 +25,28 @@ const Header = () => {
           }}
         />
       </NextLink>
-      <Nav>
+      <nav className="flex flex-row gap-4">
         <NextLink href="/">
-          <Link>Home</Link>
+          <button className="hover:underline">
+            Home
+          </button>
         </NextLink>
         <NextLink href="/about">
-          <Link>Sobre</Link>
+          <button className="hover:underline">
+            Sobre
+          </button>
         </NextLink>
         <NextLink href="/pricing">
-          <Link>Preços</Link>
+          <button className="hover:underline">
+            Preços
+          </button>
         </NextLink>
         <NextLink href="/how">
-          <Link>Como Usar</Link>
+          <button className="hover:underline">
+            Como Usar
+          </button>
         </NextLink>
-      </Nav>
+      </nav>
 
       {isHomeSidebarOpen &&
         <>
@@ -88,10 +60,10 @@ const Header = () => {
       }
       {!isHomeSidebarOpen &&
         <NextLink href='/login'>
-          <LogInButton>ENTRAR</LogInButton>
+          <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold">ENTRAR</button>
         </NextLink>
       }
-    </Container>
+    </div>
   )
 }
 
