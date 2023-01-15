@@ -28,6 +28,10 @@ module.exports = {
       opensans: ['Open Sans', 'sans-serif'],
       roboto: ['Roboto', 'sans-serif'],
     },
+    backgroundImage: {
+      'bubbles': "url('/bubbles_background.png')",
+    }
+
   },
   plugins: [],
 }

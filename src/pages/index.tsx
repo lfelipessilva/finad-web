@@ -10,9 +10,9 @@ export default function Home() {
       <Head>
         <title>Finad | Home</title>
       </Head>
-      <div>
+      <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen">
         <Header />
-        <main className="flex flex-row w-full justify-around items-center">
+        <main className="flex flex-row w-full max-w-7xl justify-between items-center">
           <div className="flex flex-col gap-4">
             <h1 className="text-5xl font-semibold font-sans">
               Se organize<br />
@@ -27,10 +27,10 @@ export default function Home() {
             </p>
             <div className="flex flex-row gap-4">
               <NextLink href='/login'>
-                <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary">ENTRAR</button>
+                <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold">ENTRAR</button>
               </NextLink>
               <NextLink href='/register'>
-                <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary">CADASTRAR</button>
+                <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold">CADASTRAR</button>
               </NextLink>
             </div>
           </div>
