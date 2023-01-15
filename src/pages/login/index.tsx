@@ -109,10 +109,10 @@ export default function Home() {
         <Header />
         <Container>
           <FormContainer onSubmit={handleSubmit}>
-            <Title>
+            <h1 className="text-6xl font-bold">
               Bem-vindo<br />
               de volta!
-            </Title>
+            </h1>
             <Input
               name="email"
               type="email"
