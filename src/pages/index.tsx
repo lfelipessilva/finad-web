@@ -10,7 +10,7 @@ export default function Home() {
       <Head>
         <title>Finad | Home</title>
       </Head>
-      <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen">
+      <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen p-4">
         <Header />
         <main className="flex flex-row w-full max-w-7xl justify-between items-center">
           <div className="flex flex-col gap-4">
