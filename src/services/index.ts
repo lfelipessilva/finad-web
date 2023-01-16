@@ -21,7 +21,6 @@ apiClient.interceptors.response.use(
         .catch((err) => {
           return Promise.reject(err);
         });
-      console.log(error.config);
       return axios(error.config);
     } else {
       return Promise.reject(error);
