@@ -47,7 +47,6 @@ export const MainTable = ({ transactions }: ComponentProps) => {
         <thead className="bg-darkPrimary w-full table-header-group" >
           <tr className="table-row text-left ">
             <th className="table-cell text-sm font-semibold py-4 px-4">Situação</th>
-            <th className="table-cell text-sm font-semibold py-4 px-4">Tipo</th>
             <th className="table-cell text-sm font-semibold">Data</th>
             <th className="table-cell text-sm font-semibold">Descrição</th>
             <th className="table-cell text-sm font-semibold">Categoria</th>
@@ -60,7 +59,6 @@ export const MainTable = ({ transactions }: ComponentProps) => {
             return (
               <tr className="bg-white border-b-1 table-row text-left" key={row.id}>
                 <td className="table-cell text-sm font-semibold p-4">{renderStatus(row.status)}</td>
-                <td className="table-cell text-sm font-semibold">{renderType(row.type)}</td>
                 <td className="table-cell text-sm font-semibold">{format(new Date(row.date), 'MM/dd/yyyy')}</td>
                 <td className="table-cell text-sm font-semibold">{row.description}</td>
                 <td className="table-cell text-sm font-semibold">{row.category}</td>
@@ -91,15 +89,6 @@ const renderStatus = (status: string) => {
     return 'Não pago'
   case 'paid':
     return 'Pagp'
-  }
-}
-
-const renderType = (type: string) => {
-  switch (type) {
-  case 'expense':
-    return 'Gasto'
-  case 'income':
-    return 'Receita'
   }
 }
 
