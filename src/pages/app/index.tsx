@@ -25,7 +25,8 @@ import AuthService from '../../services/authService'
 import Router from 'next/router'
 import IncomeService from '../../services/incomeService'
 import ExpenseService from '../../services/expenseService'
-import { format} from 'date-fns'
+import { format } from 'date-fns'
+
 export default function Home(props: any) {
 
   const { data: incomes } = useQuery("incomes", () =>
@@ -34,8 +35,6 @@ export default function Home(props: any) {
   const { data: expenses } = useQuery("expenses", () =>
     ExpenseService.findAll()
   );
-
-  console.log({ incomes, expenses });
 
   const allData = [...incomes || [], ...expenses || []]
   return (
