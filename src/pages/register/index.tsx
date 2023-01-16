@@ -88,7 +88,7 @@ export default function Home() {
             </div>
             <p className="text-center">
               já tem uma conta?&nbsp;
-              <NextLink href='/register'>
+              <NextLink href='/login'>
                 <span className="text-primary cursor-pointer hover:opacity-60">
                   entre aqui
                 </span>

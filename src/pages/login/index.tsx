@@ -50,7 +50,7 @@ export default function Home() {
               <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200">
                 ENTRAR
               </button>
-              <button className="flex flex-row justify-center selection:items-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">
+              <button className="flex flex-row justify-center items-center selection:items-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">
                 <GoogleLogo size={24} weight={'bold'} />
                 LOGIN COM GOOGLE
               </button>
