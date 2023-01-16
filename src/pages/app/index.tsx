@@ -110,7 +110,7 @@ export default function Home(props: any) {
             <tbody className="table-row-group last:rounded-lg">
               {allData.map((row, index) => {
                 return (
-                  <tr className="bg-white border-b-1 table-row text-left ">
+                  <tr className="bg-white border-b-1 table-row text-left" key={row.id}>
                     {/* <td className="table-cell text-sm font-semibold p-4">{row.status}</td> */}
                     {/* <td className="table-cell text-sm font-semibold">{row.type}</td> */}
                     <td className="table-cell text-sm font-semibold">{format(new Date(row.date), 'MM/dd/yyyy')}</td>
