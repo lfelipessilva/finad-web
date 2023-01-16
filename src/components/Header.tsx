@@ -1,15 +1,11 @@
 import NextLink from 'next/link'
 import Image from 'next/image'
 import logo from '../../public/finad_logo.png'
-import styled from 'styled-components'
-import LogInButton from './buttons/LogIn'
 import { List } from 'phosphor-react'
-import HomeSidebar from './HomeSidebar'
 import { useState } from 'react'
 
 const Header = () => {
 
-  const [isHomeSidebarOpen, setIsHomeSidebarOpen] = useState<boolean>(false)
 
   return (
     <div className="flex flex-row justify-between items-center max-w-7xl p-4 w-full">
@@ -48,21 +44,9 @@ const Header = () => {
         </NextLink>
       </nav>
 
-      {isHomeSidebarOpen &&
-        <>
-          <div onClick={() => setIsHomeSidebarOpen(true)}>
-            <List size={32} />
-          </div>
-          <HomeSidebar
-            setIsHomeSidebarOpen={setIsHomeSidebarOpen}
-          />
-        </>
-      }
-      {!isHomeSidebarOpen &&
-        <NextLink href='/login'>
-          <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200">ENTRAR</button>
-        </NextLink>
-      }
+      <NextLink href='/login'>
+        <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200">ENTRAR</button>
+      </NextLink>
     </div>
   )
 }
