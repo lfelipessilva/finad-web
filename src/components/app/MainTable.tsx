@@ -3,12 +3,11 @@ import { format } from 'date-fns'
 import {
   Pencil as PencilIcon,
   Trash as TrashIcon, Funnel as FilterIcon,
-  ArrowCircleDown as ArrowCircleUpIcon,
-  ArrowCircleUp as ArrowCircleDownIcon,
   ArrowRight as ArrowRightIcon,
   ArrowLeft as ArrowLeftIcon,
-  Scales as ScalesIcon
 } from 'phosphor-react'
+import { CreateExpenseModal } from "../modals/CreateExpenseModal"
+import { CreateIncomeModal } from "../modals/CreateIncomeModal"
 
 type ComponentProps = {
   transactions: Transaction[] | undefined,
@@ -36,10 +35,10 @@ export const MainTable = ({ transactions }: ComponentProps) => {
         </div>
         <div className="flex flex-row gap-4">
           <div className="flex items-center justify-center w-12 h-12 bg-unpaidRed rounded-full">
-            <ArrowCircleUpIcon size={32} />
+            <CreateExpenseModal />
           </div>
           <div className="flex items-center justify-center w-12 h-12 bg-paidGreen rounded-full">
-            <ArrowCircleDownIcon size={32} />
+            <CreateIncomeModal /> 
           </div>
         </div>
       </div>
@@ -88,7 +87,7 @@ const renderStatus = (status: string) => {
   case 'unpaid':
     return 'Não pago'
   case 'paid':
-    return 'Pagp'
+    return 'Pago'
   }
 }
 
