@@ -16,7 +16,7 @@ export const CreateExpenseModal = () => {
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger asChild className="hover:cursor-pointer hover:opacity-30 opacity-100 transition-all duration-100">
         <ArrowCircleDownIcon size={32} />
       </Dialog.Trigger>
       <Dialog.Portal>

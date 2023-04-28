@@ -13,10 +13,19 @@ export default function Input({ name, ...rest }: InputProps) {
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: inputRef.current,
-      path: "value"
-    });
-  }, [fieldName, registerField]);
+      ref: inputRef,
+      getValue: ref => {
+        return ref.current.value
+      },
+      setValue: (ref, value) => {
+        ref.current.value = value
+      },
+      clearValue: ref => {
+        ref.current.value = ''
+      },
+    })
+
+  }, [fieldName, registerField])
 
   return (
     <>
@@ -25,7 +34,7 @@ export default function Input({ name, ...rest }: InputProps) {
         id={fieldName}
         defaultValue={defaultValue}
         {...rest}
-        className="border-2 border-primary bg-white rounded-md p-2 text-base focus:border-secondary"
+        className="border-2 border-primary bg-white rounded-md p-2 text-base focus:border-secondary focus:outline-none"
       />
 
       {error && <span style={{ color: "#f00" }}>{error}</span>}
