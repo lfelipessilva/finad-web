@@ -14,12 +14,25 @@ import { SignInUserProps } from '../../types/User'
 import { useMutation } from 'react-query'
 import AuthService from '../../services/authService'
 import Router from 'next/router'
+import PrimaryButton from '../../components/buttons/PrimaryButton'
+import { toast } from 'react-toastify'
 
 export default function Home() {
   const formRef = useRef<FormHandles>(null)
-  const loginUser = useMutation((user: SignInUserProps) => {
-    return AuthService.signIn(user)
-  })
+
+  const loginUser = useMutation(
+    async (user: SignInUserProps) => await AuthService.signIn(user),
+    {
+      onSuccess: (data) => {
+        return Router.push('/app')
+      },
+      onError: (error: any) => {
+        toast.error('Usuário Inválido', {
+          position: 'top-center',
+        })
+      },
+    }
+  );
 
   const handleSubmit = async (data: SignInUserProps) => {
     const schema = z
@@ -39,17 +52,7 @@ export default function Home() {
       return
     }
 
-    const loggedinuser = await loginUser.mutateAsync(data)
-    console.log(loggedinuser);
-    if (loginUser.isSuccess) {
-      // console.log(loggedInUser);
-      console.log('user', loginUser);
-
-      return Router.push('/app')
-    }
-    if(loginUser.isError) {
-      console.log('erro irgal gentye');
-    }
+    return loginUser.mutate(data)
   }
 
   return (
@@ -76,9 +79,9 @@ export default function Home() {
               placeholder="Senha"
             />
             <div className="flex flex-col gap-4">
-              <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200" type="submit">
-                ENTRAR
-              </button>
+              <PrimaryButton isLoading={loginUser.isLoading}>
+                <span>ENTRAR</span>
+              </PrimaryButton>
               <button className="flex flex-row justify-center items-center selection:items-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">
                 <GoogleLogo size={24} weight={'bold'} />
                 LOGIN COM GOOGLE

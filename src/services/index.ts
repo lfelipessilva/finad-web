@@ -14,17 +14,15 @@ apiClient.interceptors.response.use(
   },
   async (error) => {
     if (error.response.status === 401 && error.config.url !== '/auth') {
-      await axios
-        .get(`${process.env.NEXT_PUBLIC_API_ROUTE}/auth/refresh-token`, {
+      try {
+        await axios.get(`${process.env.NEXT_PUBLIC_API_ROUTE}/auth/refresh-token`, {
           withCredentials: true,
         })
-        .catch((err) => {
-          return Promise.reject(err);
-        });
-      return axios(error.config);
-    } else {
-      return error
+      } catch (error) {
+        console.error(error)
+      }
     }
+    return Promise.reject(error);
   }
 );
 
