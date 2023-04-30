@@ -7,8 +7,15 @@ const signIn = async (signInUser: SignInUserProps) => {
   return response;
 }
 
+const logout = async () => {
+  const response =  apiClient.post<any>("/auth/logout");
+
+  return response;
+}
+
 const AuthService = {
-  signIn
+  signIn,
+  logout
 }
 
 export default AuthService;

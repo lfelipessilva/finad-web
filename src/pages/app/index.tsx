@@ -8,6 +8,7 @@ import Head from 'next/head'
 import { dehydrate, QueryClient } from 'react-query'
 import TransactionService from '../../services/transactionService'
 import { MainTable } from '../../components/app/MainTable'
+import { getMonth, getYear, startOfMonth } from 'date-fns'
 
 export default function Home(props: any) {
   return (
@@ -49,9 +50,9 @@ export default function Home(props: any) {
 
 export async function getStaticProps() {
   const queryClient = new QueryClient()
-
+  const date = startOfMonth(new Date())
   await queryClient.prefetchQuery("transactions", () =>
-    TransactionService.findAll({})
+    TransactionService.findAll({ month: getMonth(date) + 1, year: getYear(date) })
   );
 
   return {
