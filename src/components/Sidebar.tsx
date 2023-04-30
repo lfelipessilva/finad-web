@@ -21,8 +21,8 @@ export const Sidebar = ({ children }: any) => {
 
   return (
     <div className="flex w-full h-full">
-      <div className="flex flex-col top-0 left-0 w-64 bg-white h-fu border-r border-light-secondary">
-        <div className="flex items-center justify-center h-14 border-b border-light-secondary">
+      <div className="flex flex-col top-0 left-0 w-64 border-r border-lightPrimary bg-primary">
+        <div className="flex items-center justify-center h-14 border-b border-lightPrimary">
           <Image
             alt="finad"
             src={logo}
@@ -82,10 +82,10 @@ const SidebarOption = ({ route, label, icon, isBlocked = false }: SidebarOptionP
   const isSelected = router.pathname === route
 
   const classes = cx(
-    `relative flex flex-row items-center text-gray-600 border-l-4 p-2 border-transparent w-full gap-2 h-11 focus:outline-none `,
-    !isBlocked && `hover:bg-gray-50 hover:text-gray-800 hover:border-primary pr-6`,
-    isBlocked && `text-gray-300 hover:none pointer-events-none cursor-none`,
-    isSelected && `bg-primary text-white`
+    `relative flex flex-row items-center text-gray-300 border-l-4 p-2 border-transparent w-full gap-2 h-11 focus:outline-none `,
+    !isBlocked && `hover:bg-gray-100 hover:text-gray-800 hover:border-secondary pr-6`,
+    isBlocked && `text-gray-600 hover:none pointer-events-none cursor-none`,
+    isSelected && `bg-secondary text-white`
   )
 
   return (
@@ -127,7 +127,7 @@ const LogoutOption = () => {
 
   return (
     <li
-      className='relative flex flex-row items-center text-gray-600 border-l-4 p-2 border-transparent w-full gap-2 h-11 focus:outline-none hover:bg-gray-50 hover:text-gray-800 hover:border-primary pr-6 cursor-pointer'
+      className='relative flex flex-row items-center text-gray-200 border-l-4 p-2 border-transparent w-full gap-2 h-11 focus:outline-none hover:bg-gray-50 hover:text-gray-800 hover:border-primary pr-6 cursor-pointer'
       onClick={() => logout.mutate()}
     >
       <span className="inline-flex justify-center items-center">
@@ -146,7 +146,7 @@ const SidebarDivider = ({ name }: SidebarDividerProps) => {
   return (
     <li className="px-3">
       <div className="flex flex-row items-center h-8">
-        <div className="text-sm font-light tracking-wide text-gray-500">{name}</div>
+        <div className="text-sm font-light tracking-wide text-textColor">{name}</div>
       </div>
     </li>
   )

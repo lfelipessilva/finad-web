@@ -2,14 +2,16 @@ import React from 'react'
 
 interface Props {
   children: JSX.Element[] | JSX.Element,
-  isLoading: boolean
+  isLoading: boolean,
+  rest?: any
 }
 
-export default function PrimaryButton({ children, isLoading }: Props) {
+export default function PrimaryButton({ children, isLoading, ...rest }: Props) {
   return (
     <button
-      className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-opacity duration-200"
+      className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary   font-semibold hover:opacity-80 transition-opacity duration-200"
       type="submit"
+      {...rest}
     >
       {children}
       {!!isLoading && (

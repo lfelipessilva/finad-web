@@ -39,7 +39,7 @@ export const FormDate: FC<InputProps> = ({
             selected={value}
             onChange={onChange}
             ref={ref}
-            className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
+            className="w-full px-3 py-2 mb-1 border-2 border-gray-800 rounded-sm bg-lightPrimary first-letter:rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
           />
         )}
       />

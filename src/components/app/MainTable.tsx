@@ -22,7 +22,7 @@ export const MainTable = () => {
   return (
     <>
       <div className="flex flex-row justify-between px-6 items-center w-full bg-secondary rounded-t-lg drop-shadow-md">
-        <div className="flex items-center justify-center w-12 h-12 bg-darkPrimary rounded-full">
+        <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full">
           <FilterIcon size={32} />
         </div>
         <MonthPicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
@@ -36,31 +36,31 @@ export const MainTable = () => {
         </div>
       </div>
       <table className="w-full max-w-screen-xl table rounded-b-lg overflow-hidden drop-shadow-md">
-        <thead className="bg-darkPrimary w-full table-header-group" >
-          <tr className="table-row text-left ">
-            <th className="table-cell text-sm font-semibold py-4 px-4">Situação</th>
-            <th className="table-cell text-sm font-semibold">Data</th>
-            <th className="table-cell text-sm font-semibold">Descrição</th>
-            <th className="table-cell text-sm font-semibold">Categoria</th>
-            <th className="table-cell text-sm font-semibold">Valor</th>
-            <th className="table-cell text-sm font-semibold">Ações</th>
+        <thead className="bg-primary w-full table-header-group" >
+          <tr className="table-row text-left">
+            <th className="table-cell py-4 px-4">Situação</th>
+            <th className="table-cell">Data</th>
+            <th className="table-cell">Descrição</th>
+            <th className="table-cell">Categoria</th>
+            <th className="table-cell">Valor</th>
+            <th className="table-cell">Ações</th>
           </tr>
         </thead>
         <tbody className="table-row-group last:rounded-lg">
           {transactions?.map((row, index) => {
             return (
-              <tr className="bg-white border-b-1 table-row text-left" key={row.id}>
-                <td className="table-cell text-sm font-semibold p-4">{renderStatus(row.status)}</td>
-                <td className="table-cell text-sm font-semibold">{format(new Date(row.date), 'dd/MM/yyyy')}</td>
-                <td className="table-cell text-sm font-semibold">{row.description}</td>
-                <td className="table-cell text-sm font-semibold">{row.category}</td>
+              <tr className="bg-lightPrimary border-b-1 table-row text-left" key={row.id}>
+                <td className="table-cell p-4">{renderStatus(row.status)}</td>
+                <td className="table-cell">{format(new Date(row.date), 'dd/MM/yyyy')}</td>
+                <td className="table-cell">{row.description}</td>
+                <td className="table-cell">{row.category}</td>
                 <td
-                  className={`table-cell text-sm font-semibold
+                  className={`table-cell
                   ${row.type === 'expense' ? 'text-unpaidRed' : 'text-paidGreen'}`}
                 >
                   {formatValue(row.value)}
                 </td>
-                <td className="table-cell text-sm font-semibold">
+                <td className="table-cell">
                   <div className="flex flex-row">
                     <PencilIcon size={24} />
                     <TrashIcon size={24} />
@@ -89,13 +89,13 @@ const MonthPicker = ({ selectedDate, setSelectedDate }: MonthPickerProps) => {
         // @ts-ignore
         onClick={() => setSelectedDate(date => sub(date, { months: 1}))}
       />
-      <p className="py-3 px-4 bg-darkPrimary rounded-full scale-75 opacity-50">
+      <p className="py-3 px-4 bg-primary rounded-full scale-75 opacity-50">
         {format(sub(selectedDate, { months: 1 }), 'MMMM/yyyy', { locale: ptBR })}
       </p>
       <p className="py-3 px-4 bg-darkPrimary rounded-full">
         {format(selectedDate, 'MMMM/yyyy', { locale: ptBR })}
       </p>
-      <p className="py-3 px-4 bg-darkPrimary rounded-full scale-75 opacity-50">
+      <p className="py-3 px-4 bg-primary rounded-full scale-75 opacity-50">
         {format(add(selectedDate, { months: 1 }), 'MMMM/yyyy', { locale: ptBR })}
       </p>
       <ArrowRightIcon

@@ -27,7 +27,7 @@ export const FormInput: FC<InputProps> = ({
         aria-invalid={hasError ? "true" : "false"}
         {...register(name)}
         {...rest}
-        className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
+        className="w-full px-3 py-2 mb-1 border-2 border-gray-800 bg-lightPrimary rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
       />
       {hasError && <span role="alert">{`${errorMessage}`}</span>}
     </div>

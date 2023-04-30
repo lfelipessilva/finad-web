@@ -32,7 +32,7 @@ export const FormSelect: FC<InputProps> = ({
         aria-invalid={error ? "true" : "false"}
         {...register(name)}
         {...rest}
-        className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
+        className="w-full px-3 py-2 mb-1 border-2 border-gray-800 bg-lightPrimary rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
       >
         {!!options?.length && options.map((option, index) => (
           <option value={option.id} key={index}>
