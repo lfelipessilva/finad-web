@@ -18,7 +18,7 @@ export const Sidebar = ({ children }: any) => {
 
   return (
     <div className="flex w-full h-full">
-      <div className="flex flex-col top-0 left-0 w-64 bg-white h-full border-r border-light-secondary">
+      <div className="flex flex-col top-0 left-0 w-64 bg-white border-r border-light-secondary">
         <div className="flex items-center justify-center h-14 border-b border-light-secondary">
           <Image
             alt="finad"
