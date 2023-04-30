@@ -1,4 +1,5 @@
 import React, { FC, InputHTMLAttributes } from "react";
+import { FieldError } from "react-hook-form";
 
 interface Option {
   value: string;
@@ -8,7 +9,7 @@ interface Option {
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
-  error?: string;
+  error?: FieldError;
   register?: any;
   options: Option[];
 }
@@ -21,7 +22,9 @@ export const FormSelect: FC<InputProps> = ({
   options,
   ...rest
 }) => {
-  console.log(options);
+  const hasError = !!error
+  const errorMessage = error?.message
+
   return (
     <div className=''>
       {label && <label htmlFor={name}>{label}</label>}
@@ -37,7 +40,7 @@ export const FormSelect: FC<InputProps> = ({
           </option>
         ))}
       </select>
-      {error && <span role="alert">{error}</span>}
+      {hasError && <span role="alert">{errorMessage}</span>}
     </div>
   );
 };

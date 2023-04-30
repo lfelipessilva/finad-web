@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import {
   ArrowCircleDown as ArrowCircleDownIcon,
   X as CloseIcon
 } from 'phosphor-react'
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod'
 import { ICreateExpense } from '../../types/Expense';
 import ExpenseService from '../../services/expenseService';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -14,18 +15,58 @@ import { MaskMoney } from '../../utils/masks';
 import { FormInput } from '../FormInput';
 import { FormToggle } from '../FormToggle';
 import { FormSelect } from '../FormSelect';
+import { FormDate } from '../FormDate';
+import CategoryService from '../../services/categoryService';
 
-type FormValues = {
-  value: string;
-  date: Date;
-  paid: boolean;
-  description: string;
-  category: string;
-};
+const defualtValues = {
+  value: 'R$00,00',
+  date: new Date()
+}
+
+const validationSchema = z
+  .object({
+    value: z
+      // @ts-ignore
+      .custom<string>(string => string.match(/^R\$.+\d{2}$/) && Number(string.replace(/\D/g, '')) > 0, "O valor deve ser maior que 0!") // this regex tests for R$*,00
+      .transform(value => Number(value.replace(/\D/g, ''))),
+    paid: z
+      .boolean({
+        required_error: 'O status deve ser marcado!',
+        invalid_type_error: 'Algo deu errado :/'
+      }),
+    description: z
+      .string({
+        required_error: 'A descrição deve ser preenchida!',
+        invalid_type_error: 'Algo deu errado :/'
+      })
+      .min(1, { message: "Deve informar a descrição!" }),
+    date: z.date({
+      required_error: 'A data deve ser preenchida!',
+      invalid_type_error: 'Algo deu errado :/'
+    }),
+    category: z.string({
+      required_error: 'A categoria deve ser preenchida!',
+      invalid_type_error: 'Algo deu errado :/'
+    })
+  })
+
+type FormValues = z.input<typeof validationSchema>
+type SubmitValues = z.output<typeof validationSchema>
 
 export const CreateExpenseModal = () => {
   const [open, setOpen] = useState(false)
-  const { register, handleSubmit, formState, watch, setValue } = useForm<FormValues>({ defaultValues: { value: 'R$00,00', date: new Date() } });
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>({
+    defaultValues: defualtValues,
+    resolver: zodResolver(validationSchema)
+  });
+
+  const { data: categories } =useQuery({
+    queryKey: ['category'],
+    queryFn: async () => {
+      return CategoryService.findAll()
+    }
+  })
+
   const createExpense = useMutation(
     async (expense: ICreateExpense) => await ExpenseService.createExpense(expense),
     {
@@ -43,26 +84,7 @@ export const CreateExpenseModal = () => {
     }
   );
 
-
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-    // data.value = Number(data.value)
-    // data.status ? data.status = 'paid' : data.status = 'unpaid'
-
-    // const schema = z
-    //   .object({
-    //     value: z.number().nonnegative({ message: 'Deve informar o preço' }),
-    //     status: z.string().nonempty(),
-    //     description: z.string().nonempty({ message: 'Deve informar a descrição' }),
-    //     date: z.string(),
-    //   })
-    //   .safeParse(data)
-
-    // if (!schema.success) {
-    //   console.log(schema);
-    // }
-    createExpense.mutate(data)
-  }
+  const onSubmit: SubmitHandler<SubmitValues> = (data) => createExpense.mutate(data)
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -83,53 +105,42 @@ export const CreateExpenseModal = () => {
               <CloseIcon />
             </div>
           </Dialog.Close>
+          {/* @ts-ignore */}
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-100">
             <FormInput
               register={register}
               name="value"
               type="text"
               placeholder="Valor"
-              onChange={(event: any) => {
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setValue('value', MaskMoney(event.target.value))
               }}
+              error={errors.value}
             />
             <FormToggle
               name="paid"
               register={register}
               label="Foi pago?"
+              error={errors.paid}
             />
-            <FormInput
+            <FormDate
               register={register}
               name="date"
-              type="date"
               placeholder="Data"
-              className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
+              error={errors.date}
             />
             <FormInput
               name="description"
               register={register}
               type="text"
               placeholder="Descrição"
-              className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
+              error={errors.description}
             />
             <FormSelect
               name="category"
               register={register}
-              options={[
-                {
-                  value: "12",
-                  label: "categoria 12"
-                },
-                {
-                  value: "15",
-                  label: "categoria 15"
-                },
-                {
-                  value: "4",
-                  label: "categoria 4"
-                },
-              ]
-              }
+              options={[]}
+              error={errors.category}
             />
             <Dialog.Close asChild>
               <button className="flex flex-row justify-center items-center selection:items-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">

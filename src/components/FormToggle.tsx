@@ -1,9 +1,10 @@
 import React, { FC, InputHTMLAttributes } from "react";
+import { FieldError } from "react-hook-form";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label: string;
-  error?: string;
+  error?: FieldError;
   register?: any;
 }
 
@@ -14,6 +15,9 @@ export const FormToggle: FC<InputProps> = ({
   label,
   ...rest
 }) => {
+  const hasError = !!error
+  const errorMessage = error?.message
+
   return (
     <div className="flex flex-row justify-between">
       <label htmlFor={name}>{label}</label>
@@ -24,7 +28,7 @@ export const FormToggle: FC<InputProps> = ({
         {...register(name)}
         {...rest}
       />
-      {error && <span role="alert">{error}</span>}
+      {hasError && <span role="alert">{errorMessage}</span>}
     </div>
   );
 };
