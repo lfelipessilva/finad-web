@@ -1,4 +1,4 @@
-export type Transaction = {
+export interface ITransaction {
   id: string;
   userId: string;
   status: string;
@@ -10,3 +10,12 @@ export type Transaction = {
   created_at: Date;
   updated_at: Date;
 };
+
+export interface ICreateTransaction {
+  status: string;
+  type: string;
+  description: string;
+  category: string;
+  value: number;
+  date: Date;
+}

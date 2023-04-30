@@ -1,22 +1,22 @@
-import { Transaction } from "../types/Transaction";
+import { ITransaction, ICreateTransaction } from "../types/Transaction";
 import { apiClient } from ".";
 
-const createTransaction = async (transaction: Transaction) => {
+const createTransaction = async (transaction: ICreateTransaction) => {
   const response = await apiClient.post<any>("/transaction", transaction);
   return response;
 }
 
 const findAll = async () => {
-  const response = await apiClient.get<Transaction[]>("/transaction");
+  const response = await apiClient.get<ITransaction[]>("/transaction");
   return response.data;
 }
 
 const findById = async (id: string) => {
-  const response = await apiClient.get<Transaction>(`/transaction/${id}`);
+  const response = await apiClient.get<ITransaction>(`/transaction/${id}`);
   return response;
 }
 
-const update = async (id: string, { value, description, date }: Transaction) => {
+const update = async (id: string, { value, description, date }: ITransaction) => {
   const response = await apiClient.put<any>(`/transaction/${id}`, { value, description, date });
   return response;
 }

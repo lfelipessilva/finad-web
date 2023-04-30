@@ -1,17 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import {
   ArrowCircleDown as ArrowCircleDownIcon,
   X as CloseIcon
 } from 'phosphor-react'
-import Input from '../Input';
-import { Form } from '@unform/web'
- 
+import { useMutation } from 'react-query';
+import { toast } from 'react-toastify';
+import { z } from 'zod';
+import { ICreateExpense } from '../../types/Expense';
+import ExpenseService from '../../services/expenseService';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { MaskMoney } from '../../utils/masks';
+import { FormInput } from '../FormInput';
+import { FormToggle } from '../FormToggle';
+import { FormSelect } from '../FormSelect';
+
+type FormValues = {
+  value: string;
+  date: Date;
+  paid: boolean;
+  description: string;
+  category: string;
+};
+
 export const CreateExpenseModal = () => {
   const [open, setOpen] = useState(false)
+  const { register, handleSubmit, formState, watch, setValue } = useForm<FormValues>({ defaultValues: { value: 'R$00,00', date: new Date() } });
+  const createExpense = useMutation(
+    async (expense: ICreateExpense) => await ExpenseService.createExpense(expense),
+    {
+      onSuccess: (data) => {
+        toast.success('Despesa Criada com sucesso', {
+          position: 'top-center',
+        })
+        setOpen(false)
+      },
+      onError: (error: any) => {
+        toast.error('Houve um problema ao criar despesa', {
+          position: 'top-center',
+        })
+      },
+    }
+  );
 
-  const handleSubmit = () => {
-    setOpen(false)
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log(data);
+    // data.value = Number(data.value)
+    // data.status ? data.status = 'paid' : data.status = 'unpaid'
+
+    // const schema = z
+    //   .object({
+    //     value: z.number().nonnegative({ message: 'Deve informar o preço' }),
+    //     status: z.string().nonempty(),
+    //     description: z.string().nonempty({ message: 'Deve informar a descrição' }),
+    //     date: z.string(),
+    //   })
+    //   .safeParse(data)
+
+    // if (!schema.success) {
+    //   console.log(schema);
+    // }
+    createExpense.mutate(data)
   }
 
   return (
@@ -33,28 +83,54 @@ export const CreateExpenseModal = () => {
               <CloseIcon />
             </div>
           </Dialog.Close>
-          <Form onSubmit={handleSubmit} className="flex flex-col gap-4 w-100">
-            <Input
-              name="price"
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-100">
+            <FormInput
+              register={register}
+              name="value"
               type="text"
               placeholder="Valor"
+              onChange={(event: any) => {
+                setValue('value', MaskMoney(event.target.value))
+              }}
             />
-            <Input
+            <FormToggle
+              name="paid"
+              register={register}
+              label="Foi pago?"
+            />
+            <FormInput
+              register={register}
               name="date"
               type="date"
               placeholder="Data"
+              className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
             />
-            <Input
+            <FormInput
               name="description"
+              register={register}
               type="text"
               placeholder="Descrição"
+              className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
             />
-            <Input
+            <FormSelect
               name="category"
-              type="text"
-              placeholder="Categoria"
+              register={register}
+              options={[
+                {
+                  value: "12",
+                  label: "categoria 12"
+                },
+                {
+                  value: "15",
+                  label: "categoria 15"
+                },
+                {
+                  value: "4",
+                  label: "categoria 4"
+                },
+              ]
+              }
             />
-
             <Dialog.Close asChild>
               <button className="flex flex-row justify-center items-center selection:items-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">
                 Cancelar
@@ -63,7 +139,7 @@ export const CreateExpenseModal = () => {
             <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200" type="submit">
               Criar Despesa!
             </button>
-          </Form>
+          </form>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root >

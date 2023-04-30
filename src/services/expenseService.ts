@@ -1,8 +1,8 @@
 import axios from "axios";
-import { Expense } from "../types/Expense";
+import { Expense, ICreateExpense } from "../types/Expense";
 import { apiClient } from ".";
 
-const createExpense = async (expense: Expense) => {
+const createExpense = async (expense: ICreateExpense) => {
   const response = await apiClient.post<any>("/expense", expense);
   return response;
 }

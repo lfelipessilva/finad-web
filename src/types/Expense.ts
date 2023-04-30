@@ -7,3 +7,10 @@ export type Expense = {
   created_at: Date;
   updated_at: Date;
 };
+
+export interface ICreateExpense {
+  value: string;
+  date: Date;
+  paid: boolean;
+  description: string;
+}

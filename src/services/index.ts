@@ -22,6 +22,7 @@ apiClient.interceptors.response.use(
         console.error(error)
       }
     }
+    // console.log('caindo no reject');
     return Promise.reject(error);
   }
 );
