@@ -12,11 +12,12 @@ import { ICreateExpense } from '../../types/Expense';
 import ExpenseService from '../../services/expenseService';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MaskMoney } from '../../utils/masks';
-import { FormInput } from '../FormInput';
-import { FormToggle } from '../FormToggle';
-import { FormSelect } from '../FormSelect';
-import { FormDate } from '../FormDate';
+import { FormInput } from '../form/FormInput';
+import { FormToggle } from '../form/FormToggle';
+import { FormSelect } from '../form/FormSelect';
+import { FormDate } from '../form/FormDate';
 import CategoryService from '../../services/categoryService';
+import PrimaryButton from '../buttons/PrimaryButton';
 
 const defaultValues = {
   value: 'R$00,00',
@@ -153,9 +154,9 @@ export const CreateExpenseModal = () => {
                 Cancelar
               </button>
             </Dialog.Close>
-            <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200" type="submit">
-              Criar Despesa!
-            </button>
+            <PrimaryButton isLoading={createExpense.isLoading}>
+              <span>Criar Despesa!</span>
+            </PrimaryButton>
           </form>
         </Dialog.Content>
       </Dialog.Portal>
