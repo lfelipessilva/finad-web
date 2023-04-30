@@ -5,17 +5,11 @@ import {
   Scales as ScalesIcon
 } from 'phosphor-react'
 import Head from 'next/head'
-import { dehydrate, QueryClient, useQuery } from 'react-query'
+import { dehydrate, QueryClient } from 'react-query'
 import TransactionService from '../../services/transactionService'
 import { MainTable } from '../../components/app/MainTable'
 
 export default function Home(props: any) {
-
-  const { data: transactions } = useQuery("transactions", () =>
-    TransactionService.findAll()
-  );
-
-
   return (
     <>
       <Head>
@@ -47,7 +41,7 @@ export default function Home(props: any) {
               </div>
             </div>
           </div>
-          <MainTable transactions={transactions} />
+          <MainTable />
         </main>
       </div>
     </>
@@ -58,7 +52,7 @@ export async function getStaticProps() {
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery("transactions", () =>
-    TransactionService.findAll()
+    TransactionService.findAll({})
   );
 
   return {

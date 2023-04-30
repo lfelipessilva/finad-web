@@ -1,13 +1,18 @@
 import { ITransaction, ICreateTransaction } from "../types/Transaction";
 import { apiClient } from ".";
 
+interface IFindAll {
+  month: number,
+  year: number
+}
+
 const createTransaction = async (transaction: ICreateTransaction) => {
   const response = await apiClient.post<any>("/transaction", transaction);
   return response;
 }
 
-const findAll = async () => {
-  const response = await apiClient.get<ITransaction[]>("/transaction");
+const findAll = async ({ month, year }: IFindAll) => {
+  const response = await apiClient.get<ITransaction[]>("/transaction", { params: { month: month, year: year } })
   return response.data;
 }
 
