@@ -15,8 +15,7 @@ export default function Home(props: any) {
       <Head>
         <title>Finad | Home</title>
       </Head>
-      <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen p-4">
-        <Header />
+      <div className="flex flex-col w-full justify-start items-center bg-cover h-screen p-4">
         <main className="flex flex-col w-full max-w-7xl justify-between items-center">
           <div className="flex flex-row items-center w-full max-w-7xl justify-between pb-6">
             <div className="flex flex-row items-center bg-secondary p-2 g-4 rounded-3xl w-3/12">

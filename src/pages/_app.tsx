@@ -4,8 +4,9 @@ import { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider, Hydrate, DehydratedState } from 'react-query'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { Sidebar } from '../components/Sidebar'
 
-function MyApp({ Component, pageProps }: AppProps<{dehydrateState: DehydratedState}>) {
+function MyApp({ Component, pageProps }: AppProps<{ dehydrateState: DehydratedState }>) {
 
   const [queryClient] = React.useState(() => new QueryClient())
 
@@ -13,7 +14,9 @@ function MyApp({ Component, pageProps }: AppProps<{dehydrateState: DehydratedSta
     <>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydrateState}>
-          <Component {...pageProps} />
+          <Sidebar>
+            <Component {...pageProps} />
+          </Sidebar>
           <ToastContainer />
         </Hydrate>
       </QueryClientProvider>

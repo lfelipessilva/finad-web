@@ -2,8 +2,8 @@ import { ITransaction, ICreateTransaction } from "../types/Transaction";
 import { apiClient } from ".";
 
 interface IFindAll {
-  month: number,
-  year: number
+  month?: number,
+  year?: number
 }
 
 const createTransaction = async (transaction: ICreateTransaction) => {

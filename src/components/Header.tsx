@@ -1,12 +1,8 @@
 import NextLink from 'next/link'
 import Image from 'next/image'
 import logo from '../../public/finad_logo.png'
-import { List } from 'phosphor-react'
-import { useState } from 'react'
 
 const Header = () => {
-
-
   return (
     <div className="flex flex-row justify-between items-center max-w-7xl p-4 w-full">
       <NextLink href='/'>
