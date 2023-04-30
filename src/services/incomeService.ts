@@ -1,8 +1,7 @@
-import axios from "axios";
-import { Income } from "../types/Income";
+import { ICreateIncome, Income } from "../types/Income";
 import { apiClient } from ".";
 
-const createIncome = async (income: Income) => {
+const createIncome = async (income: ICreateIncome) => {
   const response = await apiClient.post<any>("/income", income);
   return response;
 }

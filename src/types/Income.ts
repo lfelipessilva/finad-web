@@ -7,3 +7,10 @@ export type Income = {
   created_at: Date;
   updated_at: Date;
 };
+
+export interface ICreateIncome {
+  value: number;
+  status: 'received' | 'unreceived';
+  description: string;
+  date: Date;
+}

@@ -1,20 +1,97 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import {
   ArrowCircleUp as ArrowCircleUpIcon,
   X as CloseIcon
 } from 'phosphor-react'
-import Input from '../Input';
-import { Form } from '@unform/web'
-import Toggle from '../Toggle';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { toast } from 'react-toastify';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ICreateIncome } from '../../types/Income';
+import IncomeService from '../../services/incomeService';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { MaskMoney } from '../../utils/masks';
+import { FormInput } from '../form/FormInput';
+import { FormToggle } from '../form/FormToggle';
+import { FormSelect } from '../form/FormSelect';
+import { FormDate } from '../form/FormDate';
+import CategoryService from '../../services/categoryService';
+import PrimaryButton from '../buttons/PrimaryButton';
+
+const defaultValues = {
+  value: 'R$00,00',
+  date: new Date()
+}
+
+const validationSchema = z
+  .object({
+    value: z
+      // @ts-ignore
+      .custom<string>(string => string.match(/^R\$.+\d{2}$/) && Number(string.replace(/\D/g, '')) > 0, "O valor deve ser maior que 0!") // this regex tests for R$*,00
+      .transform(value => Number(value.replace(/\D/g, ''))),
+    status: z
+      .boolean({
+        required_error: 'O status deve ser marcado!',
+        invalid_type_error: 'Algo deu errado :/'
+      })
+      .transform(value => value ? 'received' : 'unreceived'),
+    description: z
+      .string({
+        required_error: 'A descrição deve ser preenchida!',
+        invalid_type_error: 'Algo deu errado :/'
+      })
+      .min(1, { message: "Deve informar a descrição!" }),
+    date: z.date({
+      required_error: 'A data deve ser preenchida!',
+      invalid_type_error: 'Algo deu errado :/'
+    }),
+    category: z.string({
+      required_error: 'A categoria deve ser preenchida!',
+      invalid_type_error: 'Algo deu errado :/'
+    })
+  })
+
+type FormValues = z.input<typeof validationSchema>
+type SubmitValues = z.output<typeof validationSchema>
 
 export const CreateIncomeModal = () => {
+  const queryClient = useQueryClient()
   const [open, setOpen] = useState(false)
+  const { register, handleSubmit, setValue, formState: { errors }, reset: resetForm } = useForm<FormValues>({
+    defaultValues: defaultValues,
+    resolver: zodResolver(validationSchema)
+  });
 
-  const handleSubmit = (data: any) => {
-    console.log(data);
-    // setOpen(false)
-  }
+  const { data: categories } = useQuery({
+    queryKey: ['category'],
+    queryFn: async () => {
+      return CategoryService.findAll()
+    }
+  })
+
+  const createIncome = useMutation(
+    async (income: ICreateIncome) => await IncomeService.createIncome(income),
+    {
+      onSuccess: (data) => {
+        toast.success('Receita criada com sucesso', {
+          position: 'top-center',
+        })
+
+        queryClient.invalidateQueries({ queryKey: 'transactions' })
+        resetForm()
+
+        setOpen(false)
+      },
+      onError: (error: any) => {
+        toast.error('Houve um problema ao criar receita :/', {
+          position: 'top-center',
+        })
+      },
+    }
+  );
+
+  const onSubmit: SubmitHandler<SubmitValues> = (data) => createIncome.mutate(data)
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -35,38 +112,52 @@ export const CreateIncomeModal = () => {
               <CloseIcon />
             </div>
           </Dialog.Close>
-          <Form onSubmit={handleSubmit} className="flex flex-col gap-4 w-100">
-            <Input
-              name="price"
+          {/* @ts-ignore */}
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-100">
+            <FormInput
+              register={register}
+              name="value"
               type="text"
               placeholder="Valor"
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                setValue('value', MaskMoney(event.target.value))
+              }}
+              error={errors.value}
             />
-            <Toggle name="received" placeholder="Foi recebido?"/>
-            <Input
+            <FormToggle
+              name="status"
+              register={register}
+              label="Já recebeu?"
+              error={errors.status}
+            />
+            <FormDate
+              register={register}
               name="date"
-              type="date"
               placeholder="Data"
+              error={errors.date}
             />
-            <Input
+            <FormInput
               name="description"
+              register={register}
               type="text"
               placeholder="Descrição"
+              error={errors.description}
             />
-            <Input
+            <FormSelect
               name="category"
-              type="text"
-              placeholder="Categoria"
+              register={register}
+              options={categories}
+              error={errors.category}
             />
-
             <Dialog.Close asChild>
               <button className="flex flex-row justify-center items-center selection:items-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">
                 Cancelar
               </button>
             </Dialog.Close>
-            <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200" type="submit">
-              Criar Receita!
-            </button>
-          </Form>
+            <PrimaryButton isLoading={createIncome.isLoading}>
+              <span>Criar Receita!</span>
+            </PrimaryButton>
+          </form>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root >
