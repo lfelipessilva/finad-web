@@ -4,6 +4,9 @@ import Image from 'next/image'
 import { Gear, House, Lock, SignOut, Tray, User } from 'phosphor-react'
 import logo from '../../public/finad_logo.png'
 import cx from 'classnames'
+import { useMutation } from 'react-query'
+import AuthService from '../services/authService'
+import { toast } from 'react-toastify'
 
 export const Sidebar = ({ children }: any) => {
   const router = useRouter()
@@ -18,7 +21,7 @@ export const Sidebar = ({ children }: any) => {
 
   return (
     <div className="flex w-full h-full">
-      <div className="flex flex-col top-0 left-0 w-64 bg-white border-r border-light-secondary">
+      <div className="flex flex-col top-0 left-0 w-64 bg-white h-fu border-r border-light-secondary">
         <div className="flex items-center justify-center h-14 border-b border-light-secondary">
           <Image
             alt="finad"
@@ -56,11 +59,7 @@ export const Sidebar = ({ children }: any) => {
               isBlocked
             />
             <SidebarDivider name='Sair' />
-            <SidebarOption
-              label='Logout'
-              route='/logout'
-              icon={<SignOut />}
-            />
+            <LogoutOption />
           </ul>
         </div>
       </div>
@@ -105,7 +104,37 @@ const SidebarOption = ({ route, label, icon, isBlocked = false }: SidebarOptionP
           </span>
         )}
       </NextLink>
-    </li >
+    </li>
+  )
+}
+
+const LogoutOption = () => {
+  const router = useRouter()
+
+  const logout = useMutation(
+    async () => await AuthService.logout(),
+    {
+      onSuccess: () => {
+        return router.replace('/')
+      },
+      onError: () => {
+        toast.error('Ops! aconteceu algum problema no logout', {
+          position: 'top-center',
+        })
+      },
+    }
+  );
+
+  return (
+    <li
+      className='relative flex flex-row items-center text-gray-600 border-l-4 p-2 border-transparent w-full gap-2 h-11 focus:outline-none hover:bg-gray-50 hover:text-gray-800 hover:border-primary pr-6 cursor-pointer'
+      onClick={() => logout.mutate()}
+    >
+      <span className="inline-flex justify-center items-center">
+        <SignOut />
+      </span>
+      <span className="text-sm tracking-wide truncate">Logout</span>
+    </li>
   )
 }
 
