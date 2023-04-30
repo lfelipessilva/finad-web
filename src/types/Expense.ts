@@ -9,8 +9,8 @@ export type Expense = {
 };
 
 export interface ICreateExpense {
-  value: string;
-  date: Date;
+  value: number;
   paid: boolean;
   description: string;
+  date: Date;
 }
