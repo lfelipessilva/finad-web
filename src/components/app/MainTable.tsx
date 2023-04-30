@@ -16,7 +16,7 @@ export const MainTable = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(startOfMonth(new Date()))
 
   const { data: transactions } = useQuery(["transactions", selectedDate], () =>
-    TransactionService.findAll({ month: getMonth(selectedDate), year: getYear(selectedDate) })
+    TransactionService.findAll({ month: getMonth(selectedDate) + 1, year: getYear(selectedDate) })
   );
 
   return (
