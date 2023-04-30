@@ -1,4 +1,4 @@
-import { Transaction } from "../../types/Transaction"
+import { ITransaction } from "../../types/Transaction"
 import { format } from 'date-fns'
 import {
   Pencil as PencilIcon,
@@ -10,7 +10,7 @@ import { CreateExpenseModal } from "../modals/CreateExpenseModal"
 import { CreateIncomeModal } from "../modals/CreateIncomeModal"
 
 type ComponentProps = {
-  transactions: Transaction[] | undefined,
+  transactions: ITransaction[] | undefined,
 }
 
 export const MainTable = ({ transactions }: ComponentProps) => {

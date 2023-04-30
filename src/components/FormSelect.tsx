@@ -2,8 +2,8 @@ import React, { FC, InputHTMLAttributes } from "react";
 import { FieldError } from "react-hook-form";
 
 interface Option {
-  value: string;
-  label: string;
+  id: string;
+  name: string;
 }
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -11,7 +11,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: FieldError;
   register?: any;
-  options: Option[];
+  options: Option[] | undefined;
 }
 
 export const FormSelect: FC<InputProps> = ({
@@ -34,9 +34,9 @@ export const FormSelect: FC<InputProps> = ({
         {...rest}
         className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
       >
-        {options.map((option, index) => (
-          <option value={option.value} key={index}>
-            {option.label}
+        {!!options?.length && options.map((option, index) => (
+          <option value={option.id} key={index}>
+            {option.name}
           </option>
         ))}
       </select>

@@ -4,7 +4,7 @@ import {
   ArrowCircleDown as ArrowCircleDownIcon,
   X as CloseIcon
 } from 'phosphor-react'
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,7 +18,7 @@ import { FormSelect } from '../FormSelect';
 import { FormDate } from '../FormDate';
 import CategoryService from '../../services/categoryService';
 
-const defualtValues = {
+const defaultValues = {
   value: 'R$00,00',
   date: new Date()
 }
@@ -29,11 +29,12 @@ const validationSchema = z
       // @ts-ignore
       .custom<string>(string => string.match(/^R\$.+\d{2}$/) && Number(string.replace(/\D/g, '')) > 0, "O valor deve ser maior que 0!") // this regex tests for R$*,00
       .transform(value => Number(value.replace(/\D/g, ''))),
-    paid: z
+    status: z
       .boolean({
         required_error: 'O status deve ser marcado!',
         invalid_type_error: 'Algo deu errado :/'
-      }),
+      })
+      .transform(value => value ? 'paid' : 'unpaid'),
     description: z
       .string({
         required_error: 'A descrição deve ser preenchida!',
@@ -54,13 +55,14 @@ type FormValues = z.input<typeof validationSchema>
 type SubmitValues = z.output<typeof validationSchema>
 
 export const CreateExpenseModal = () => {
+  const queryClient = useQueryClient()
   const [open, setOpen] = useState(false)
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>({
-    defaultValues: defualtValues,
+  const { register, handleSubmit, setValue, formState: { errors }, reset: resetForm } = useForm<FormValues>({
+    defaultValues: defaultValues,
     resolver: zodResolver(validationSchema)
   });
 
-  const { data: categories } =useQuery({
+  const { data: categories } = useQuery({
     queryKey: ['category'],
     queryFn: async () => {
       return CategoryService.findAll()
@@ -74,6 +76,10 @@ export const CreateExpenseModal = () => {
         toast.success('Despesa Criada com sucesso', {
           position: 'top-center',
         })
+
+        queryClient.invalidateQueries({ queryKey: 'transactions' })
+        resetForm()
+
         setOpen(false)
       },
       onError: (error: any) => {
@@ -118,10 +124,10 @@ export const CreateExpenseModal = () => {
               error={errors.value}
             />
             <FormToggle
-              name="paid"
+              name="status"
               register={register}
               label="Foi pago?"
-              error={errors.paid}
+              error={errors.status}
             />
             <FormDate
               register={register}
@@ -139,7 +145,7 @@ export const CreateExpenseModal = () => {
             <FormSelect
               name="category"
               register={register}
-              options={[]}
+              options={categories}
               error={errors.category}
             />
             <Dialog.Close asChild>
