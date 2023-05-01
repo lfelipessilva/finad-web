@@ -21,8 +21,8 @@ export const MainTable = () => {
 
   return (
     <>
-      <div className="flex flex-row justify-between px-6 items-center w-full bg-secondary rounded-t-lg drop-shadow-md">
-        <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full">
+      <div className="flex flex-row justify-between px-6 items-center w-full bg-lightPrimary rounded-t-lg drop-shadow-md">
+        <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full text-secondary">
           <FilterIcon size={32} />
         </div>
         <MonthPicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
@@ -85,22 +85,22 @@ const MonthPicker = ({ selectedDate, setSelectedDate }: MonthPickerProps) => {
     <div className="flex flex-row items-center justify-center p-4">
       <ArrowLeftIcon
         size={32}
-        className="text-lightSecondary"
+        className="text-secondary hover:scale-125 transition-transform cursor-pointer"
         // @ts-ignore
         onClick={() => setSelectedDate(date => sub(date, { months: 1}))}
       />
-      <p className="py-3 px-4 bg-primary rounded-full scale-75 opacity-50">
+      <p className="py-3 px-4 bg-primary rounded-full scale-75 opacity-50 border border-secondary">
         {format(sub(selectedDate, { months: 1 }), 'MMMM/yyyy', { locale: ptBR })}
       </p>
-      <p className="py-3 px-4 bg-darkPrimary rounded-full">
+      <p className="py-3 px-4 bg-transparent rounded-full border border-secondary text-secondary">
         {format(selectedDate, 'MMMM/yyyy', { locale: ptBR })}
       </p>
-      <p className="py-3 px-4 bg-primary rounded-full scale-75 opacity-50">
+      <p className="py-3 px-4 bg-primary rounded-full scale-75 opacity-50 border border-secondary">
         {format(add(selectedDate, { months: 1 }), 'MMMM/yyyy', { locale: ptBR })}
       </p>
       <ArrowRightIcon
         size={32}
-        className="text-lightSecondary"
+        className="text-secondary hover:scale-125 transition-transform cursor-pointer"
         //@ts-ignore
         onClick={() => setSelectedDate(date => add(date, { months: 1}))}
       />

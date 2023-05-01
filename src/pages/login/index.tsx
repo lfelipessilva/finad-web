@@ -94,7 +94,6 @@ export default function Home() {
               </NextLink>
             </p>
           </form>
-
           <div>
             <Image
               src={readingWomen}
