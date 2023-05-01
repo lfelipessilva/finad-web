@@ -21,8 +21,8 @@ export const Sidebar = ({ children }: any) => {
 
   return (
     <div className="flex w-full h-full">
-      <div className="flex flex-col top-0 left-0 w-64 border-r border-lightPrimary bg-primary">
-        <div className="flex items-center justify-center h-14 border-b border-lightPrimary">
+      <div className="flex flex-col top-0 left-0 w-64 border-r border-primary bg-lightPrimary">
+        <div className="flex items-center justify-center h-14">
           <Image
             alt="finad"
             src={logo}
@@ -34,7 +34,7 @@ export const Sidebar = ({ children }: any) => {
           />
         </div>
         <div className="overflow-y-auto overflow-x-scroll flex-grow">
-          <ul className="flex flex-col py-4 space-y-1">
+          <ul className="flex flex-col space-y-1">
             <SidebarDivider name='Menu' />
             <SidebarOption
               label='Dashboard'

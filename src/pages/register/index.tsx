@@ -8,9 +8,11 @@ import Input from '../../components/Input'
 import Head from 'next/head'
 import { useMutation } from 'react-query'
 import { Form } from '@unform/web'
-import { SignUpUserProps,  SignInUserProps } from '../../types/User'
+import { SignUpUserProps, SignInUserProps } from '../../types/User'
 import UserService from '../../services/userService'
 import AuthService from '../../services/authService'
+import PrimaryButton from '../../components/buttons/PrimaryButton'
+import SecondaryButton from '../../components/buttons/SecondaryButton'
 
 export default function Home() {
   const createUser = useMutation((user: SignUpUserProps) => {
@@ -78,13 +80,17 @@ export default function Home() {
               placeholder="Senha"
             />
             <div className="flex flex-col gap-4">
-              <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200">
-                CRIAR CONTA
-              </button>
-              <button className="flex flex-row items-center justify-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">
-                <GoogleLogo size={24} weight={'bold'} />
-                CRIAR COM GOOGLE
-              </button>
+              <PrimaryButton isLoading={createUser.isLoading}>
+                <span>
+                  CRIAR CONTA
+                </span>
+              </PrimaryButton>
+              <SecondaryButton >
+                <span className="flex gap-1">
+                  <GoogleLogo size={24} weight={'bold'} />
+                  ENTRAR COM GOOGLE
+                </span>
+              </SecondaryButton>
             </div>
             <p className="text-center">
               já tem uma conta?&nbsp;

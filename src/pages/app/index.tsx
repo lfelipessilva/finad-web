@@ -36,7 +36,7 @@ export default function Home(props: any) {
             <div className="flex flex-row items-center bg-lightPrimary p-2 g-4 rounded-3xl w-3/12">
               <ScalesIcon size={48} />
               <div className="flex flex-col">
-                <h3 className="text-2xl text-white opacity-80">Saldo Atual:</h3>
+                <h3 className="text-2xl text-white opacity-80">Saldo do mês:</h3>
                 <h2 className="text-3xl text-white">{formatValue(balances?.balance)}</h2>
               </div>
             </div>
