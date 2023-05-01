@@ -82,10 +82,10 @@ const SidebarOption = ({ route, label, icon, isBlocked = false }: SidebarOptionP
   const isSelected = router.pathname === route
 
   const classes = cx(
-    `relative flex flex-row items-center text-gray-300 border-l-4 p-2 border-transparent w-full gap-2 h-11 focus:outline-none `,
-    !isBlocked && `hover:bg-gray-100 hover:text-gray-800 hover:border-secondary pr-6`,
-    isBlocked && `text-gray-600 hover:none pointer-events-none cursor-none`,
-    isSelected && `bg-secondary text-white`
+    `flex gap-2 flex-row text-2xl items-center border-l-4 p-2 border-transparent w-full focus:outline-none`,
+    !isBlocked && `hover:bg-darkSecondary hover:border-secondary`,
+    isBlocked && `pointer-events-none cursor-none opacity-30`,
+    isSelected && `bg-secondary`
   )
 
   return (
@@ -94,7 +94,7 @@ const SidebarOption = ({ route, label, icon, isBlocked = false }: SidebarOptionP
         href={route}
         className={classes}
       >
-        <span className="inline-flex justify-center items-center">
+        <span className="inline-flex justify-center items-center opac">
           {icon}
         </span>
         <span className="text-sm tracking-wide truncate">{label}</span>
@@ -125,9 +125,9 @@ const LogoutOption = () => {
     }
   );
 
-  return (
+  return (  
     <li
-      className='relative flex flex-row items-center text-gray-200 border-l-4 p-2 border-transparent w-full gap-2 h-11 focus:outline-none hover:bg-gray-50 hover:text-gray-800 hover:border-primary pr-6 cursor-pointer'
+      className='flex gap-2 flex-row text-2xl items-center border-l-4 p-2 border-transparent w-full focus:outline-none hover:bg-unpaidRed hover:border-unpaidRed cursor-pointer'
       onClick={() => logout.mutate()}
     >
       <span className="inline-flex justify-center items-center">
@@ -146,7 +146,7 @@ const SidebarDivider = ({ name }: SidebarDividerProps) => {
   return (
     <li className="px-3">
       <div className="flex flex-row items-center h-8">
-        <div className="text-sm font-light tracking-wide text-textColor">{name}</div>
+        <div className="text-sm font-light tracking-wide">{name}</div>
       </div>
     </li>
   )
