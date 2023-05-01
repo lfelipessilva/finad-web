@@ -1,16 +1,23 @@
-import Header from '../../components/Header'
+import { useState } from 'react'
 import {
   ArrowCircleDown as ArrowCircleUpIcon,
   ArrowCircleUp as ArrowCircleDownIcon,
   Scales as ScalesIcon
 } from 'phosphor-react'
 import Head from 'next/head'
-import { dehydrate, QueryClient } from 'react-query'
+import { dehydrate, QueryClient, useQuery } from 'react-query'
 import TransactionService from '../../services/transactionService'
 import { MainTable } from '../../components/app/MainTable'
-import { getMonth, getYear, startOfMonth } from 'date-fns'
+import { endOfMonth, startOfMonth } from 'date-fns'
+import { formatValue } from '../../utils/format'
 
 export default function Home(props: any) {
+  const [selectedDate, setSelectedDate] = useState<Date>(startOfMonth(new Date()))
+
+  const { data: balances, isLoading } = useQuery(["transactions_balances", selectedDate], () =>
+    TransactionService.findBalances({ dateStart: startOfMonth(selectedDate), dateEnd: endOfMonth(selectedDate) })
+  );
+
   return (
     <>
       <Head>
@@ -23,25 +30,25 @@ export default function Home(props: any) {
               <ArrowCircleDownIcon size={48} className="text-paidGreen" />
               <div className="flex flex-col">
                 <h3 className="text-2xl text-white opacity-80">Receitas Totais:</h3>
-                <h2 className="text-3xl text-white">R$ 4039,39</h2>
+                <h2 className="text-3xl text-white">{formatValue(balances?.income)}</h2>
               </div>
             </div>
             <div className="flex flex-row items-center bg-lightPrimary p-2 g-4 rounded-3xl w-3/12">
               <ScalesIcon size={48} />
               <div className="flex flex-col">
                 <h3 className="text-2xl text-white opacity-80">Saldo Atual:</h3>
-                <h2 className="text-3xl text-white">R$ 241,38</h2>
+                <h2 className="text-3xl text-white">{formatValue(balances?.balance)}</h2>
               </div>
             </div>
             <div className="flex flex-row items-center bg-lightPrimary p-2 g-4 rounded-3xl w-3/12">
               <ArrowCircleUpIcon size={48} className="text-unpaidRed" />
               <div className="flex flex-col">
                 <h3 className="text-2xl text-white opacity-80">Despesas Totais:</h3>
-                <h2 className="text-3xl text-white">R$ 703,09</h2>
+                <h2 className="text-3xl text-white">{formatValue(balances?.expense)}</h2>
               </div>
             </div>
           </div>
-          <MainTable />
+          <MainTable selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         </main>
       </div>
     </>
@@ -50,9 +57,13 @@ export default function Home(props: any) {
 
 export async function getStaticProps() {
   const queryClient = new QueryClient()
-  const date = startOfMonth(new Date())
+
   await queryClient.prefetchQuery("transactions", () =>
-    TransactionService.findAll({ month: getMonth(date) + 1, year: getYear(date) })
+    TransactionService.findAll({ dateStart: startOfMonth(new Date()), dateEnd: endOfMonth(new Date()) })
+  );
+
+  await queryClient.prefetchQuery("transactions_balance", () =>
+    TransactionService.findBalances({ dateStart: startOfMonth(new Date()), dateEnd: endOfMonth(new Date()) })
   );
 
   return {

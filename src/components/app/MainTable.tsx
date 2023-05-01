@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { format, startOfMonth, add, sub, getMonth, getYear } from 'date-fns'
+import { format, startOfMonth, add, sub, endOfMonth } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import {
   Pencil as PencilIcon,
@@ -11,12 +11,11 @@ import { CreateExpenseModal } from "../modals/CreateExpenseModal"
 import { CreateIncomeModal } from "../modals/CreateIncomeModal"
 import TransactionService from "../../services/transactionService"
 import { useQuery } from "react-query"
+import { formatValue } from "../../utils/format"
 
-export const MainTable = () => {
-  const [selectedDate, setSelectedDate] = useState<Date>(startOfMonth(new Date()))
-
-  const { data: transactions } = useQuery(["transactions", selectedDate], () =>
-    TransactionService.findAll({ month: getMonth(selectedDate) + 1, year: getYear(selectedDate) })
+export const MainTable = ({selectedDate, setSelectedDate}: MonthPickerProps) => {
+  const { data: transactions, isLoading } = useQuery(["transactions", selectedDate], () =>
+    TransactionService.findAll({ dateStart: startOfMonth(selectedDate), dateEnd: endOfMonth(selectedDate) })
   );
 
   return (
@@ -46,6 +45,17 @@ export const MainTable = () => {
             <th className="table-cell">Ações</th>
           </tr>
         </thead>
+        {transactions?.length === 0 && (
+          <tr className="bg-lightPrimary border-b-1 table-row text-left">
+            <td className="table-cell p-4 text-center text-xl" colSpan={6}>Tudo vazio por aqui!</td>
+          </tr>
+
+        )}
+        {isLoading && (
+          <tr className="bg-lightPrimary border-b-1 table-row text-left">
+            <td className="table-cell p-4 text-center text-xl" colSpan={6}>Só um instante..</td>
+          </tr>
+        )}
         <tbody className="table-row-group last:rounded-lg">
           {transactions?.map((row, index) => {
             return (
@@ -53,7 +63,7 @@ export const MainTable = () => {
                 <td className="table-cell p-4">{renderStatus(row.status)}</td>
                 <td className="table-cell">{format(new Date(row.date), 'dd/MM/yyyy')}</td>
                 <td className="table-cell">{row.description}</td>
-                <td className="table-cell">{row.category}</td>
+                <td className="table-cell">{row?.category?.name}</td>
                 <td
                   className={`table-cell
                   ${row.type === 'expense' ? 'text-unpaidRed' : 'text-paidGreen'}`}
@@ -87,7 +97,7 @@ const MonthPicker = ({ selectedDate, setSelectedDate }: MonthPickerProps) => {
         size={32}
         className="text-secondary hover:scale-125 transition-transform cursor-pointer"
         // @ts-ignore
-        onClick={() => setSelectedDate(date => sub(date, { months: 1}))}
+        onClick={() => setSelectedDate(date => sub(date, { months: 1 }))}
       />
       <p className="py-3 px-4 bg-primary rounded-full scale-75 opacity-50 border border-secondary">
         {format(sub(selectedDate, { months: 1 }), 'MMMM/yyyy', { locale: ptBR })}
@@ -102,7 +112,7 @@ const MonthPicker = ({ selectedDate, setSelectedDate }: MonthPickerProps) => {
         size={32}
         className="text-secondary hover:scale-125 transition-transform cursor-pointer"
         //@ts-ignore
-        onClick={() => setSelectedDate(date => add(date, { months: 1}))}
+        onClick={() => setSelectedDate(date => add(date, { months: 1 }))}
       />
     </div>
   )
@@ -118,10 +128,4 @@ const renderStatus = (status: string) => {
   case 'received':
     return 'Recebido'
   }
-}
-
-const formatValue = (value: number) => {
-  const v = value / 100
-
-  return v.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 }

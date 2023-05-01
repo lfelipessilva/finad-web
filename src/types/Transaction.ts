@@ -4,7 +4,9 @@ export interface ITransaction {
   status: string;
   type: string;
   description: string;
-  category: string;
+  category: {
+    name: string;
+  };
   value: number;
   date: Date;
   created_at: Date;

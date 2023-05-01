@@ -2,8 +2,8 @@ import { ITransaction, ICreateTransaction } from "../types/Transaction";
 import { apiClient } from ".";
 
 interface IFindAll {
-  month?: number,
-  year?: number
+  dateStart: Date,
+  dateEnd: Date
 }
 
 const createTransaction = async (transaction: ICreateTransaction) => {
@@ -11,8 +11,13 @@ const createTransaction = async (transaction: ICreateTransaction) => {
   return response;
 }
 
-const findAll = async ({ month, year }: IFindAll) => {
-  const response = await apiClient.get<ITransaction[]>("/transaction", { params: { month: month, year: year } })
+const findAll = async ({ dateStart, dateEnd }: IFindAll) => {
+  const response = await apiClient.get<ITransaction[]>("/transaction", { params: { dateStart, dateEnd } })
+  return response.data;
+}
+
+const findBalances = async ({ dateStart, dateEnd }: IFindAll) => {
+  const response = await apiClient.get<{balance: number, expense: number, income: number}>("/transaction/balance", { params: { dateStart, dateEnd } })
   return response.data;
 }
 
@@ -39,6 +44,7 @@ const deleteAll = async () => {
 const TransactionService = {
   createTransaction,
   findAll,
+  findBalances,
   findById,
   update,
   deleteById,
