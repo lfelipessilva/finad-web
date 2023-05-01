@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import z from 'zod'
@@ -6,7 +6,6 @@ import readingWomen from '../../../public/reading_women.png'
 import Header from '../../components/Header'
 import { GoogleLogo } from 'phosphor-react'
 import Head from 'next/head'
-import { FormHandles } from '@unform/core'
 import { useMutation } from 'react-query'
 import AuthService from '../../services/authService'
 import Router from 'next/router'
@@ -19,15 +18,19 @@ import SecondaryButton from '../../components/buttons/SecondaryButton'
 
 const validationSchema = z
   .object({
-    email: z.string().email({ message: 'Email inválido' }),
-    password: z.string().nonempty({ message: 'Senha inválida' }),
+    email: z
+      .string()
+      .min(1, { message: "Ops! está faltando seu email aqui" })
+      .email({ message: 'Email inválido' }),
+    password: z
+      .string()
+      .min(1, { message: "Ops! está faltando sua senha aqui" })
   })
 
 type FormValues = z.infer<typeof validationSchema>
 
 export default function Home() {
   const { register, handleSubmit } = useForm<FormValues>({ resolver: zodResolver(validationSchema) })
-  const formRef = useRef<FormHandles>(null)
 
   const loginUser = useMutation(
     async (user: FormValues) => await AuthService.signIn(user),
