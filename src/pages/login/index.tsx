@@ -16,12 +16,25 @@ import AuthService from '../../services/authService'
 import Router from 'next/router'
 import PrimaryButton from '../../components/buttons/PrimaryButton'
 import { toast } from 'react-toastify'
+import { FormInput } from '../../components/form/FormInput'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import SecondaryButton from '../../components/buttons/SecondaryButton'
+
+const validationSchema = z
+  .object({
+    email: z.string().email({ message: 'Email inválido' }),
+    password: z.string().nonempty({ message: 'Senha inválida' }),
+  })
+
+type FormValues = z.infer<typeof validationSchema>
 
 export default function Home() {
+  const { register, handleSubmit } = useForm<FormValues>({ resolver: zodResolver(validationSchema) })
   const formRef = useRef<FormHandles>(null)
 
   const loginUser = useMutation(
-    async (user: SignInUserProps) => await AuthService.signIn(user),
+    async (user: FormValues) => await AuthService.signIn(user),
     {
       onSuccess: (data) => {
         return Router.push('/app')
@@ -34,26 +47,7 @@ export default function Home() {
     }
   );
 
-  const handleSubmit = async (data: SignInUserProps) => {
-    const schema = z
-      .object({
-        email: z.string().email({ message: 'Email inválido' }),
-        password: z.string().nonempty({ message: 'Senha inválida' }),
-      })
-      .safeParse(data)
-
-    if (!schema.success) {
-      formRef.current?.setErrors({}) // this remove all errors before setting them again
-
-      const errors = parseZodErrors(schema.error)
-      errors.map(error => {
-        return formRef.current?.setFieldError(error.inputName, error.message)
-      })
-      return
-    }
-
-    return loginUser.mutate(data)
-  }
+  const onSubmit: SubmitHandler<FormValues> = (data) => loginUser.mutate(data)
 
   return (
     <>
@@ -63,17 +57,19 @@ export default function Home() {
       <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen p-4">
         <Header />
         <main className="flex flex-row w-full max-w-7xl justify-between items-center">
-          <Form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4 w-80">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-80">
             <h1 className="text-5xl font-semibold font-sans">
               Bem-vindo<br />
               de volta!
             </h1>
-            <Input
+            <FormInput
+              register={register}
               name="email"
               type="text"
               placeholder="Email"
             />
-            <Input
+            <FormInput
+              register={register}
               name="password"
               type="password"
               placeholder="Senha"
@@ -82,20 +78,22 @@ export default function Home() {
               <PrimaryButton isLoading={loginUser.isLoading}>
                 <span>ENTRAR</span>
               </PrimaryButton>
-              <button className="flex flex-row justify-center items-center selection:items-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-secondary font-semibold hover:opacity-80 transition-all duration-200">
-                <GoogleLogo size={24} weight={'bold'} />
-                LOGIN COM GOOGLE
-              </button>
+              <SecondaryButton>
+                <span className="flex gap-1">
+                  <GoogleLogo size={24} weight={'bold'} />
+                  LOGIN COM GOOGLE
+                </span>
+              </SecondaryButton>
             </div>
             <p className="text-center">
               ainda não tem conta?&nbsp;
               <NextLink href='/register'>
-                <span className="text-primary cursor-pointer hover:opacity-60">
+                <span className="cursor-pointer hover:opacity-60">
                   crie aqui
                 </span>
               </NextLink>
             </p>
-          </Form>
+          </form>
 
           <div>
             <Image
