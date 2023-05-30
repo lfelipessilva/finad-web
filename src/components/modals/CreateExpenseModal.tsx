@@ -79,6 +79,8 @@ export const CreateExpenseModal = () => {
         })
 
         queryClient.invalidateQueries({ queryKey: 'transactions' })
+        queryClient.invalidateQueries({ queryKey: 'transactions_balances' })
+        
         resetForm()
 
         setOpen(false)

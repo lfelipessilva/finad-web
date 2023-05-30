@@ -78,7 +78,7 @@ export const CreateIncomeModal = () => {
           position: 'top-center',
         })
 
-        queryClient.invalidateQueries({ queryKey: 'transactions' })
+        queryClient.invalidateQueries({ queryKey: ['transactions', 'transactions_balances'] })
         resetForm()
 
         setOpen(false)
