@@ -30,7 +30,7 @@ const validationSchema = z
 type FormValues = z.infer<typeof validationSchema>
 
 export default function Home() {
-  const { register, handleSubmit } = useForm<FormValues>({ resolver: zodResolver(validationSchema) })
+  const { register, handleSubmit, formState: { errors }} = useForm<FormValues>({ resolver: zodResolver(validationSchema) })
 
   const loginUser = useMutation(
     async (user: FormValues) => await AuthService.signIn(user),
@@ -66,23 +66,25 @@ export default function Home() {
               name="email"
               type="text"
               placeholder="Email"
+              error={errors.email}
             />
             <FormInput
               register={register}
               name="password"
               type="password"
               placeholder="Senha"
+              error={errors.password}
             />
             <div className="flex flex-col gap-4">
               <PrimaryButton isLoading={loginUser.isLoading}>
                 <span>ENTRAR</span>
               </PrimaryButton>
-              <SecondaryButton>
+              {/* <SecondaryButton>
                 <span className="flex gap-1">
                   <GoogleLogo size={24} weight={'bold'} />
                   LOGIN COM GOOGLE
                 </span>
-              </SecondaryButton>
+              </SecondaryButton> */}
             </div>
             <p className="text-center">
               ainda não tem conta?&nbsp;

@@ -13,30 +13,63 @@ import UserService from '../../services/userService'
 import AuthService from '../../services/authService'
 import PrimaryButton from '../../components/buttons/PrimaryButton'
 import SecondaryButton from '../../components/buttons/SecondaryButton'
+import { FormInput } from '../../components/form/FormInput'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'react-toastify'
+import { z } from 'zod'
+
+const validationSchema = z
+  .object({
+    name: z
+      .string()
+      .min(1, { message: "Ops! está faltando seu nome aqui" }),
+    lastName: z
+      .string()
+      .min(1, { message: "Ops! está faltando seu sobrenome aqui" }),
+    email: z
+      .string()
+      .min(1, { message: "Ops! está faltando seu email aqui" })
+      .email({ message: 'Email inválido' }),
+    password: z
+      .string()
+      .min(1, { message: "Ops! está faltando sua senha aqui" })
+  })
+
+type FormValues = z.infer<typeof validationSchema>
 
 export default function Home() {
-  const createUser = useMutation((user: SignUpUserProps) => {
-    return UserService.createUser(user)
-  })
+  const { register, handleSubmit, formState: { errors }, getValues } = useForm<FormValues>({ resolver: zodResolver(validationSchema) })
 
-  const authenticateUser = useMutation((user: SignInUserProps) => {
-    return AuthService.signIn(user)
-  })
-
-  const handleSubmit = async (data: SignUpUserProps) => {
-    try {
-      const createUserResponse = await createUser.mutateAsync(data)
-      if (createUserResponse.status === 201) {
-        const authenticateUserResponse = await authenticateUser.mutateAsync({ email: data.email, password: data.password })
-
-        if (authenticateUserResponse.status === 201) {
-          return Router.push('/app')
-        }
-      }
-    } catch (error) {
-      console.error(error)
+  const createUser = useMutation(
+    async (user: FormValues) => await UserService.createUser(user),
+    {
+      onSuccess: (response) => {
+        authenticateUser.mutate({ email: response.data.email, password: getValues('password') })
+      },
+      onError: (error: any) => {
+        toast.error('Houve um problema ao criar usuário', {
+          position: 'top-center',
+        })
+      },
     }
-  }
+  );
+
+  const authenticateUser = useMutation(
+    async (user: SignInUserProps) => await AuthService.signIn(user),
+    {
+      onSuccess: (response) => {
+        return Router.push('/app')
+      },
+      onError: (error: any) => {
+        toast.error('Houve um problema ao autenticar', {
+          position: 'top-center',
+        })
+      },
+    }
+  );
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => createUser.mutate(data)
 
   return (
     <>
@@ -46,38 +79,40 @@ export default function Home() {
       <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen p-4">
         <Header />
         <main className="flex flex-row w-full max-w-7xl justify-between items-center">
-          <Form onSubmit={handleSubmit} className="flex flex-col gap-4 w-80">
-            <h1 className="text-5xl font-semibold font-sans">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-80">
+            <h1 className="text-5xl font-semibold font-Ans">
               Comece a se< br />
               Organizar!
             </h1>
             <div className="flex flex-row gap-4">
-              <Input
+              <FormInput
+                register={register}
+                name="name"
                 type="text"
                 placeholder="Nome"
-                name="name"
-                style={{
-                  width: '50%'
-                }}
+                error={errors.name}
               />
-              <Input
+              <FormInput
+                register={register}
                 name="lastName"
                 type="text"
-                placeholder="Sobrenome"
-                style={{
-                  width: '50%'
-                }}
+                placeholder="Sobreome"
+                error={errors.lastName}
               />
             </div>
-            <Input
+            <FormInput
+              register={register}
               name="email"
-              type="email"
+              type="text"
               placeholder="Email"
+              error={errors.email}
             />
-            <Input
+            <FormInput
+              register={register}
               name="password"
               type="password"
               placeholder="Senha"
+              error={errors.password}
             />
             <div className="flex flex-col gap-4">
               <PrimaryButton isLoading={createUser.isLoading}>
@@ -85,12 +120,12 @@ export default function Home() {
                   CRIAR CONTA
                 </span>
               </PrimaryButton>
-              <SecondaryButton >
+              {/* <SecondaryButton >
                 <span className="flex gap-1">
                   <GoogleLogo size={24} weight={'bold'} />
                   ENTRAR COM GOOGLE
                 </span>
-              </SecondaryButton>
+              </SecondaryButton> */}
             </div>
             <p className="text-center">
               já tem uma conta?&nbsp;
@@ -100,7 +135,7 @@ export default function Home() {
                 </span>
               </NextLink>
             </p>
-          </Form>
+          </form>
 
           <div>
             <Image

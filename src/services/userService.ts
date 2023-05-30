@@ -9,7 +9,7 @@ const apiClient = axios.create({
 });
 
 const createUser = async (signUpUser: SignUpUserProps) => {
-  const response = await apiClient.post<any>("/user", signUpUser);
+  const response = await apiClient.post<User>("/user", signUpUser);
   return response;
 }
 
