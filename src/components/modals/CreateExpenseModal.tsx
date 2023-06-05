@@ -93,7 +93,7 @@ export const CreateExpenseModal = () => {
     }
   );
 
-  const onSubmit: SubmitHandler<SubmitValues> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<SubmitValues> = (data) => createExpense.mutate(data)
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
