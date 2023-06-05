@@ -5,7 +5,7 @@ import logo from '../../public/finad_logo.png'
 const Header = () => {
   return (
     <div className="flex flex-row justify-between items-center max-w-7xl p-4 w-full">
-      <NextLink href='/'>
+      <NextLink href='/' className="hidden sm:block">
         <Image
           alt="finad"
           src={logo}
@@ -17,7 +17,7 @@ const Header = () => {
           }}
         />
       </NextLink>
-      <nav className="flex flex-row gap-4">
+      <nav className="flex flex-row gap-2 md:gap-4">
         <NextLink href="/">
           <button className="hover:underline">
             Home

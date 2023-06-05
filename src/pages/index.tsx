@@ -12,7 +12,7 @@ export default function Home() {
       </Head>
       <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen p-4">
         <Header />
-        <main className="flex flex-row w-full max-w-7xl justify-between items-center">
+        <main className="flex flex-col md:flex-row w-full max-w-7xl justify-between items-center">
           <div className="flex flex-col gap-4">
             <h1 className="text-5xl font-semibold font-sans">
               Se organize<br />
