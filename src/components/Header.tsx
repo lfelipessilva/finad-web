@@ -40,7 +40,7 @@ const Header = () => {
         </NextLink>
       </nav>
 
-      <NextLink href='/login'>
+      <NextLink href='/login' className="hidden sm:block">
         <button className="rounded-xl bg-blue-500 p-3 text-2xl text-white bg-primary font-semibold hover:opacity-80 transition-all duration-200">ENTRAR</button>
       </NextLink>
     </div>

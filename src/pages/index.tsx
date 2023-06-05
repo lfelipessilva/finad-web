@@ -14,7 +14,7 @@ export default function Home() {
         <Header />
         <main className="flex flex-col md:flex-row w-full max-w-7xl justify-between items-center">
           <div className="flex flex-col gap-4">
-            <h1 className="text-5xl font-semibold font-sans">
+            <h1 className="text-6xl font-semibold font-sans">
               Se organize<br />
               Como<br />
               Em Nenhum<br />
