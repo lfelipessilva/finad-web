@@ -46,7 +46,7 @@ const validationSchema = z
       required_error: 'A data deve ser preenchida!',
       invalid_type_error: 'Algo deu errado :/'
     }),
-    category: z.string({
+    categoryId: z.string({
       required_error: 'A categoria deve ser preenchida!',
       invalid_type_error: 'Algo deu errado :/'
     })
@@ -146,10 +146,10 @@ export const CreateIncomeModal = () => {
               error={errors.description}
             />
             <FormSelect
-              name="category"
+              name="categoryId"
               register={register}
               options={categories}
-              error={errors.category}
+              error={errors.categoryId}
             />
             <Dialog.Close asChild>
               <button className="flex flex-row justify-center items-center selection:items-center rounded-xl bg-blue-500 p-3 text-2xl text-white bg-gray-700 font-semibold hover:opacity-80 transition-all duration-200">
