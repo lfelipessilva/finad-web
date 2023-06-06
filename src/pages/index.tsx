@@ -3,6 +3,7 @@ import NextLink from 'next/link'
 import Image from 'next/image'
 import readingWomen from '../../public/reading_women.png'
 import Header from '../components/Header'
+import { ReadingWomen } from '../components/ReadingWomen'
 
 export default function Home() {
   return (
@@ -13,7 +14,7 @@ export default function Home() {
       <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen p-4">
         <Header />
         <main className="flex flex-col justify-center gap-8 h-full md:flex-row w-full max-w-7xl md:justify-between items-center">
-          <div className="flex flex-col gap-4 w-96">
+          <div className="flex flex-col gap-4">
             <h1 className="text-5xl md:text-6xl font-semibold font-sans">
               Se organize<br />
               Como<br />
@@ -34,15 +35,8 @@ export default function Home() {
               </NextLink>
             </div>
           </div>
+        <ReadingWomen />
 
-          <div>
-            <Image
-              src={readingWomen}
-              alt="reading women"
-              width={700}
-              height={634}
-            />
-          </div>
         </main>
       </div>
     </>

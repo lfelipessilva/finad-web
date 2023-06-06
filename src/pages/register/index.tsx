@@ -18,6 +18,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
+import { ReadingWomen } from '../../components/ReadingWomen'
 
 const validationSchema = z
   .object({
@@ -79,7 +80,7 @@ export default function Home() {
       <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen p-4">
         <Header />
         <main className="flex flex-col justify-center h-full md:flex-row w-full max-w-7xl md:justify-between items-center">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-96">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full max-w-sm">
             <h1 className="text-5xl md:text-6xl font-semibold font-sans">
               Comece a se< br />
               Organizar!
@@ -130,21 +131,15 @@ export default function Home() {
             <p className="text-center">
               já tem uma conta?&nbsp;
               <NextLink href='/login'>
+              width={700}
+              height={634}
                 <span className="text-primary cursor-pointer hover:opacity-60">
                   entre aqui
                 </span>
               </NextLink>
             </p>
           </form>
-
-          <div>
-            <Image
-              src={readingWomen}
-              alt="reading women"
-              width={700}
-              height={634}
-            />
-          </div>
+<ReadingWomen />
         </main>
       </div>
     </>
