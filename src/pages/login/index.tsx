@@ -55,9 +55,9 @@ export default function Home() {
       </Head>
       <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen p-4">
         <Header />
-        <main className="flex flex-row w-full max-w-7xl justify-between items-center">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-80">
-            <h1 className="text-5xl font-semibold font-sans">
+        <main className="flex flex-col h-screen justify-center gap-8 md:flex-row w-full max-w-7xl sm:justify-between items-center">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-96">
+            <h1 className="text-5xl md:text-6xl font-semibold font-sans">
               Bem-vindo<br />
               de volta!
             </h1>

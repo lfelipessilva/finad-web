@@ -17,7 +17,7 @@ const Header = () => {
           }}
         />
       </NextLink>
-      <nav className="flex flex-row gap-2 md:gap-4">
+      <nav className="flex flex-row w-full justify-center gap-4">
         <NextLink href="/">
           <button className="hover:underline">
             Home

@@ -12,9 +12,9 @@ export default function Home() {
       </Head>
       <div className="flex flex-col w-full justify-start items-center bg-bubbles bg-cover h-screen p-4">
         <Header />
-        <main className="flex flex-col md:flex-row w-full max-w-7xl justify-between items-center">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-6xl font-semibold font-sans">
+        <main className="flex flex-col justify-center gap-8 h-full md:flex-row w-full max-w-7xl md:justify-between items-center">
+          <div className="flex flex-col gap-4 w-96">
+            <h1 className="text-5xl md:text-6xl font-semibold font-sans">
               Se organize<br />
               Como<br />
               Em Nenhum<br />
