@@ -131,8 +131,6 @@ export default function Home() {
             <p className="text-center">
               já tem uma conta?&nbsp;
               <NextLink href='/login'>
-              width={700}
-              height={634}
                 <span className="text-primary cursor-pointer hover:opacity-60">
                   entre aqui
                 </span>
