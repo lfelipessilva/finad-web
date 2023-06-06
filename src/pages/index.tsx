@@ -35,7 +35,7 @@ export default function Home() {
               </NextLink>
             </div>
           </div>
-        <ReadingWomen />
+          <ReadingWomen />
 
         </main>
       </div>

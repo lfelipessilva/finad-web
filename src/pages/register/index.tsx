@@ -139,7 +139,7 @@ export default function Home() {
               </NextLink>
             </p>
           </form>
-<ReadingWomen />
+          <ReadingWomen />
         </main>
       </div>
     </>
