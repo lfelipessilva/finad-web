@@ -145,7 +145,7 @@ export const CreateExpenseModal = () => {
               placeholder="Descrição"
               error={errors.description}
             />
-           <FormSelect
+            <FormSelect
               name="categoryId"
               register={register}
               options={categories}
