@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios"
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_ROUTE,
@@ -13,7 +13,7 @@ apiClient.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response.status === 401 && error.config.url !== '/auth') {
+    if (error.response.status === 401 && error.config.url !== "/auth") {
       try {
         await axios.get(`${process.env.NEXT_PUBLIC_API_ROUTE}/auth/refresh-token`, {
           withCredentials: true,
