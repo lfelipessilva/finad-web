@@ -123,7 +123,9 @@ export const CreateIncomeModal = () => {
         asChild
         className="transition-all duration-100 opacity-100 hover:cursor-pointer hover:opacity-30"
       >
-        <ArrowCircleUpIcon size={32} />
+        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-paidGreen">
+          <ArrowCircleUpIcon size={32} />
+        </div>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0" />
