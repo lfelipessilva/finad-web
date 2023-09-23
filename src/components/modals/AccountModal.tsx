@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X as CloseIcon, Vault as VaultIcon } from "phosphor-react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,6 +38,13 @@ export const AccountModal = () => {
     reset: resetForm,
   } = useForm<FormValues>({
     resolver: zodResolver(validationSchema),
+  });
+
+  const { data: accounts } = useQuery({
+    queryKey: ["account"],
+    queryFn: async () => {
+      return AccountService.findAll();
+    },
   });
 
   const createAccount = useMutation(
@@ -89,7 +96,17 @@ export const AccountModal = () => {
               <CloseIcon />
             </div>
           </Dialog.Close>
-          {/* @ts-ignore */}
+          <section className="flex flex-col gap-4">
+            {accounts?.map((account, index) => (
+              <div
+                key={account.id}
+                className="flex flex-col gap-2 p-2 rounded bg-secondary"
+              >
+                <h4>{account.name}</h4>
+                <p className="text-gray-400">{account.description}</p>
+              </div>
+            ))}
+          </section>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-4 w-100"
