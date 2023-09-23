@@ -29,7 +29,7 @@ const validationSchema = z.object({
   value: z
     // @ts-ignore
     .custom<string>(
-      (string) =>
+      (string: any) =>
         string.match(/^R\$.+\d{2}$/) && Number(string.replace(/\D/g, "")) > 0,
       "O valor deve ser maior que 0!"
     ) // this regex tests for R$*,00
