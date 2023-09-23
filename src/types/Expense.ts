@@ -10,7 +10,7 @@ export type Expense = {
 
 export interface ICreateExpense {
   value: number;
-  status: 'paid' | 'unpaid';
+  status: "paid" | "unpaid";
   description: string;
   date: Date;
 }

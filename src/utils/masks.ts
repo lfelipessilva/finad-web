@@ -9,26 +9,26 @@
 // }
 
 export function MaskMoney(valor: any) {
-  const v = ((valor.replace(/\D/g, '') / 100).toFixed(2) + '').split('.')
+  const v = ((valor.replace(/\D/g, "") / 100).toFixed(2) + "").split(".")
 
   const m = v[0]
-    .split('')
+    .split("")
     .reverse()
-    .join('')
+    .join("")
     .match(/.{1,3}/g)
 
   if (!m) {
-    return 'R$00,00'
+    return "R$00,00"
   }
 
   for (let i = 0; i < m.length; i++)
     m[i] =
       m[i]
-        .split('')
+        .split("")
         .reverse()
-        .join('') + '.'
+        .join("") + "."
 
-  const r = m.reverse().join('')
+  const r = m.reverse().join("")
 
-  return `R$${r.substring(0, r.lastIndexOf('.')) + ',' + v[1]}`
+  return `R$${r.substring(0, r.lastIndexOf(".")) + "," + v[1]}`
 }

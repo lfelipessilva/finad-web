@@ -10,7 +10,9 @@ export type Income = {
 
 export interface ICreateIncome {
   value: number;
-  status: 'received' | 'unreceived';
+  status: "received" | "unreceived";
   description: string;
   date: Date;
+  categoryId: string;
+  accountId: string;
 }

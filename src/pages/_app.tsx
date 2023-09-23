@@ -1,10 +1,10 @@
-import '../styles/globals.css'
-import React from 'react'
-import { AppProps } from 'next/app'
-import { QueryClient, QueryClientProvider, Hydrate, DehydratedState } from 'react-query'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
-import { Sidebar } from '../components/Sidebar'
+import "../styles/globals.css"
+import React from "react"
+import { AppProps } from "next/app"
+import { QueryClient, QueryClientProvider, Hydrate, DehydratedState } from "react-query"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
+import { Sidebar } from "../components/Sidebar"
 
 function MyApp({ Component, pageProps }: AppProps<{ dehydrateState: DehydratedState }>) {
 

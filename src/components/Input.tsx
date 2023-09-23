@@ -21,7 +21,7 @@ export default function Input({ name, ...rest }: InputProps) {
         ref.current.value = value
       },
       clearValue: ref => {
-        ref.current.value = ''
+        ref.current.value = ""
       },
     })
 

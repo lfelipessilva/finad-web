@@ -1,24 +1,24 @@
-import NextLink from 'next/link'
-import Image from 'next/image'
-import Router from 'next/router'
-import readingWomen from '../../../public/reading_women.png'
-import Header from '../../components/Header'
-import { GoogleLogo } from 'phosphor-react'
-import Input from '../../components/Input'
-import Head from 'next/head'
-import { useMutation } from 'react-query'
-import { Form } from '@unform/web'
-import { SignUpUserProps, SignInUserProps } from '../../types/User'
-import UserService from '../../services/userService'
-import AuthService from '../../services/authService'
-import PrimaryButton from '../../components/buttons/PrimaryButton'
-import SecondaryButton from '../../components/buttons/SecondaryButton'
-import { FormInput } from '../../components/form/FormInput'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from 'react-toastify'
-import { z } from 'zod'
-import { ReadingWomen } from '../../components/ReadingWomen'
+import NextLink from "next/link"
+import Image from "next/image"
+import Router from "next/router"
+import readingWomen from "../../../public/reading_women.png"
+import Header from "../../components/Header"
+import { GoogleLogo } from "phosphor-react"
+import Input from "../../components/Input"
+import Head from "next/head"
+import { useMutation } from "react-query"
+import { Form } from "@unform/web"
+import { SignUpUserProps, SignInUserProps } from "../../types/User"
+import UserService from "../../services/userService"
+import AuthService from "../../services/authService"
+import PrimaryButton from "../../components/buttons/PrimaryButton"
+import SecondaryButton from "../../components/buttons/SecondaryButton"
+import { FormInput } from "../../components/form/FormInput"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "react-toastify"
+import { z } from "zod"
+import { ReadingWomen } from "../../components/ReadingWomen"
 
 const validationSchema = z
   .object({
@@ -31,7 +31,7 @@ const validationSchema = z
     email: z
       .string()
       .min(1, { message: "Ops! está faltando seu email aqui" })
-      .email({ message: 'Email inválido' }),
+      .email({ message: "Email inválido" }),
     password: z
       .string()
       .min(1, { message: "Ops! está faltando sua senha aqui" })
@@ -46,11 +46,11 @@ export default function Home() {
     async (user: FormValues) => await UserService.createUser(user),
     {
       onSuccess: (response) => {
-        authenticateUser.mutate({ email: response.data.email, password: getValues('password') })
+        authenticateUser.mutate({ email: response.data.email, password: getValues("password") })
       },
       onError: (error: any) => {
-        toast.error('Houve um problema ao criar usuário', {
-          position: 'top-center',
+        toast.error("Houve um problema ao criar usuário", {
+          position: "top-center",
         })
       },
     }
@@ -60,11 +60,11 @@ export default function Home() {
     async (user: SignInUserProps) => await AuthService.signIn(user),
     {
       onSuccess: (response) => {
-        return Router.push('/app')
+        return Router.push("/app")
       },
       onError: (error: any) => {
-        toast.error('Houve um problema ao autenticar', {
-          position: 'top-center',
+        toast.error("Houve um problema ao autenticar", {
+          position: "top-center",
         })
       },
     }

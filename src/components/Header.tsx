@@ -1,6 +1,6 @@
-import NextLink from 'next/link'
-import Image from 'next/image'
-import logo from '../../public/finad_logo.png'
+import NextLink from "next/link"
+import Image from "next/image"
+import logo from "../../public/finad_logo.png"
 
 const Header = () => {
   return (
@@ -13,7 +13,7 @@ const Header = () => {
           width={128}
           height={40}
           style={{
-            cursor: 'pointer'
+            cursor: "pointer"
           }}
         />
       </NextLink>

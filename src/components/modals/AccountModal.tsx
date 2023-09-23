@@ -1,102 +1,67 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import {
-  ArrowCircleDown as ArrowCircleDownIcon,
-  X as CloseIcon,
-} from "phosphor-react";
+import { X as CloseIcon, Vault as VaultIcon } from "phosphor-react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ICreateExpense } from "../../types/Expense";
-import ExpenseService from "../../services/expenseService";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { MaskMoney } from "../../utils/masks";
 import { FormInput } from "../form/FormInput";
-import { FormToggle } from "../form/FormToggle";
-import { FormSelect } from "../form/FormSelect";
-import { FormDate } from "../form/FormDate";
-import CategoryService from "../../services/categoryService";
 import PrimaryButton from "../buttons/PrimaryButton";
-
-const defaultValues = {
-  value: "R$00,00",
-  date: new Date(),
-};
+import { ICreateAccount } from "../../types/Account";
+import AccountService from "../../services/accountService";
 
 const validationSchema = z.object({
-  value: z
-    // @ts-ignore
-    .custom<string>(
-      (string) =>
-        string.match(/^R\$.+\d{2}$/) && Number(string.replace(/\D/g, "")) > 0,
-      "O valor deve ser maior que 0!"
-    ) // this regex tests for R$*,00
-    .transform((value) => Number(value.replace(/\D/g, ""))),
-  status: z
-    .boolean({
-      required_error: "O status deve ser marcado!",
+  name: z
+    .string({
+      required_error: "O nome deve ser preenchido!",
       invalid_type_error: "Algo deu errado :/",
     })
-    .transform((value) => (value ? "paid" : "unpaid")),
+    .min(1, { message: "Deve informar o nome!" }),
   description: z
     .string({
       required_error: "A descrição deve ser preenchida!",
       invalid_type_error: "Algo deu errado :/",
     })
     .min(1, { message: "Deve informar a descrição!" }),
-  date: z.date({
-    required_error: "A data deve ser preenchida!",
-    invalid_type_error: "Algo deu errado :/",
-  }),
-  categoryId: z.string({
-    required_error: "A categoria deve ser preenchida!",
-    invalid_type_error: "Algo deu errado :/",
-  }),
 });
 
 type FormValues = z.input<typeof validationSchema>;
 type SubmitValues = z.output<typeof validationSchema>;
 
-export const CreateExpenseModal = () => {
-  const queryClient = useQueryClient();
+export const AccountModal = () => {
   const [open, setOpen] = useState(false);
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
     reset: resetForm,
   } = useForm<FormValues>({
-    defaultValues: defaultValues,
     resolver: zodResolver(validationSchema),
   });
 
-  const { data: categories } = useQuery({
-    queryKey: ["category"],
+  const { data: accounts } = useQuery({
+    queryKey: ["account"],
     queryFn: async () => {
-      return CategoryService.findAll();
+      return AccountService.findAll();
     },
   });
 
-  const createExpense = useMutation(
-    async (expense: ICreateExpense) =>
-      await ExpenseService.createExpense(expense),
+  const createAccount = useMutation(
+    async (account: ICreateAccount) =>
+      await AccountService.createAccount(account),
     {
       onSuccess: (data) => {
-        toast.success("Despesa Criada com sucesso", {
+        toast.success("Conta Criada com sucesso", {
           position: "top-center",
         });
-
-        queryClient.invalidateQueries({ queryKey: "transactions" });
-        queryClient.invalidateQueries({ queryKey: "transactions_balances" });
 
         resetForm();
 
         setOpen(false);
       },
       onError: (error: any) => {
-        toast.error("Houve um problema ao criar despesa", {
+        toast.error("Houve um problema ao criar conta", {
           position: "top-center",
         });
       },
@@ -104,7 +69,7 @@ export const CreateExpenseModal = () => {
   );
 
   const onSubmit: SubmitHandler<SubmitValues> = (data) =>
-    createExpense.mutate(data);
+    createAccount.mutate(data);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -112,8 +77,9 @@ export const CreateExpenseModal = () => {
         asChild
         className="transition-all duration-100 opacity-100 hover:cursor-pointer hover:opacity-30"
       >
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-unpaidRed">
-          <ArrowCircleDownIcon size={32} />
+        <div className="flex items-center justify-center h-12 gap-2 p-2 rounded-full bg-secondary">
+          <VaultIcon size={32} />
+          <span className="font-semibold">Conta</span>
         </div>
       </Dialog.Trigger>
       <Dialog.Portal>
@@ -130,32 +96,27 @@ export const CreateExpenseModal = () => {
               <CloseIcon />
             </div>
           </Dialog.Close>
-          {/* @ts-ignore */}
+          <section className="flex flex-col gap-4">
+            {accounts?.map((account, index) => (
+              <div
+                key={account.id}
+                className="flex flex-col gap-2 p-2 rounded bg-secondary"
+              >
+                <h4>{account.name}</h4>
+                <p className="text-gray-400">{account.description}</p>
+              </div>
+            ))}
+          </section>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-4 w-100"
           >
             <FormInput
+              name="name"
               register={register}
-              name="value"
               type="text"
-              placeholder="Valor"
-              onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                setValue("value", MaskMoney(event.target.value));
-              }}
-              error={errors.value}
-            />
-            <FormToggle
-              name="status"
-              register={register}
-              label="Foi pago?"
-              error={errors.status}
-            />
-            <FormDate
-              register={register}
-              name="date"
-              placeholder="Data"
-              error={errors.date}
+              placeholder="Nome da conta"
+              error={errors.name}
             />
             <FormInput
               name="description"
@@ -164,19 +125,13 @@ export const CreateExpenseModal = () => {
               placeholder="Descrição"
               error={errors.description}
             />
-            <FormSelect
-              name="categoryId"
-              register={register}
-              options={categories}
-              error={errors.categoryId}
-            />
             <Dialog.Close asChild>
               <button className="flex flex-row items-center justify-center p-3 text-2xl font-semibold text-white transition-all duration-200 bg-gray-700 bg-blue-500 selection:items-center rounded-xl hover:opacity-80">
                 Cancelar
               </button>
             </Dialog.Close>
-            <PrimaryButton isLoading={createExpense.isLoading}>
-              <span>Criar Despesa!</span>
+            <PrimaryButton isLoading={createAccount.isLoading}>
+              <span>Criar Conta!</span>
             </PrimaryButton>
           </form>
         </Dialog.Content>
