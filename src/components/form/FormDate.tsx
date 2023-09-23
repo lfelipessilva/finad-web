@@ -1,5 +1,5 @@
 import React, { FC, InputHTMLAttributes } from "react";
-import DatePicker from 'react-datepicker'
+import DatePicker from "react-datepicker"
 import { Controller, FieldError, useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 

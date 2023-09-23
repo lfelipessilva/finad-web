@@ -1,17 +1,17 @@
-import { useRouter } from 'next/router'
-import NextLink from 'next/link'
-import Image from 'next/image'
-import { Gear, House, Lock, SignOut, Tray, User } from 'phosphor-react'
-import logo from '../../public/finad_logo.png'
-import cx from 'classnames'
-import { useMutation } from 'react-query'
-import AuthService from '../services/authService'
-import { toast } from 'react-toastify'
+import { useRouter } from "next/router"
+import NextLink from "next/link"
+import Image from "next/image"
+import { Gear, House, Lock, SignOut, Tray, User } from "phosphor-react"
+import logo from "../../public/finad_logo.png"
+import cx from "classnames"
+import { useMutation } from "react-query"
+import AuthService from "../services/authService"
+import { toast } from "react-toastify"
 
 export const Sidebar = ({ children }: any) => {
   const router = useRouter()
 
-  if (!router.pathname.includes('/app')) {
+  if (!router.pathname.includes("/app")) {
     return (
       <>
         {children}
@@ -28,9 +28,9 @@ export const Sidebar = ({ children }: any) => {
             src={logo}
             width={112}
             style={{
-              cursor: 'pointer'
+              cursor: "pointer"
             }}
-            onClick={() => router.push('/app')}
+            onClick={() => router.push("/app")}
           />
         </div>
         <div className="overflow-y-auto overflow-x-scroll flex-grow">
@@ -82,10 +82,10 @@ const SidebarOption = ({ route, label, icon, isBlocked = false }: SidebarOptionP
   const isSelected = router.pathname === route
 
   const classes = cx(
-    `flex gap-2 flex-row text-2xl items-center border-l-4 p-2 border-transparent w-full focus:outline-none`,
-    !isBlocked && `hover:bg-darkSecondary hover:border-secondary`,
-    isBlocked && `pointer-events-none cursor-none opacity-30`,
-    isSelected && `bg-secondary`
+    "flex gap-2 flex-row text-2xl items-center border-l-4 p-2 border-transparent w-full focus:outline-none",
+    !isBlocked && "hover:bg-darkSecondary hover:border-secondary",
+    isBlocked && "pointer-events-none cursor-none opacity-30",
+    isSelected && "bg-secondary"
   )
 
   return (
@@ -115,11 +115,11 @@ const LogoutOption = () => {
     async () => await AuthService.logout(),
     {
       onSuccess: () => {
-        return router.replace('/')
+        return router.replace("/")
       },
       onError: () => {
-        toast.error('Ops! aconteceu algum problema no logout', {
-          position: 'top-center',
+        toast.error("Ops! aconteceu algum problema no logout", {
+          position: "top-center",
         })
       },
     }

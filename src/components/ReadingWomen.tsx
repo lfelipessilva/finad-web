@@ -1,5 +1,5 @@
-import readingWomen from '../../public/reading_women.png'
-import Image from 'next/image'
+import readingWomen from "../../public/reading_women.png"
+import Image from "next/image"
 
 export function ReadingWomen() {
   return (

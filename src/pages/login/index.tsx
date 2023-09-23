@@ -1,28 +1,28 @@
-import React from 'react'
-import NextLink from 'next/link'
-import Image from 'next/image'
-import z from 'zod'
-import readingWomen from '../../../public/reading_women.png'
-import Header from '../../components/Header'
-import { GoogleLogo } from 'phosphor-react'
-import Head from 'next/head'
-import { useMutation } from 'react-query'
-import AuthService from '../../services/authService'
-import Router from 'next/router'
-import PrimaryButton from '../../components/buttons/PrimaryButton'
-import { toast } from 'react-toastify'
-import { FormInput } from '../../components/form/FormInput'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import SecondaryButton from '../../components/buttons/SecondaryButton'
-import { ReadingWomen } from '../../components/ReadingWomen'
+import React from "react"
+import NextLink from "next/link"
+import Image from "next/image"
+import z from "zod"
+import readingWomen from "../../../public/reading_women.png"
+import Header from "../../components/Header"
+import { GoogleLogo } from "phosphor-react"
+import Head from "next/head"
+import { useMutation } from "react-query"
+import AuthService from "../../services/authService"
+import Router from "next/router"
+import PrimaryButton from "../../components/buttons/PrimaryButton"
+import { toast } from "react-toastify"
+import { FormInput } from "../../components/form/FormInput"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import SecondaryButton from "../../components/buttons/SecondaryButton"
+import { ReadingWomen } from "../../components/ReadingWomen"
 
 const validationSchema = z
   .object({
     email: z
       .string()
       .min(1, { message: "Ops! está faltando seu email aqui" })
-      .email({ message: 'Email inválido' }),
+      .email({ message: "Email inválido" }),
     password: z
       .string()
       .min(1, { message: "Ops! está faltando sua senha aqui" })
@@ -37,11 +37,11 @@ export default function Home() {
     async (user: FormValues) => await AuthService.signIn(user),
     {
       onSuccess: (data) => {
-        return Router.push('/app')
+        return Router.push("/app")
       },
       onError: (error: any) => {
-        toast.error('Usuário Inválido', {
-          position: 'top-center',
+        toast.error("Usuário Inválido", {
+          position: "top-center",
         })
       },
     }

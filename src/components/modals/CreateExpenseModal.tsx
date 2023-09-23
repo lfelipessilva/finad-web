@@ -1,26 +1,26 @@
-import React, { ChangeEvent, useState } from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
+import React, { ChangeEvent, useState } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
 import {
   ArrowCircleDown as ArrowCircleDownIcon,
   X as CloseIcon
-} from 'phosphor-react'
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { toast } from 'react-toastify';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod'
-import { ICreateExpense } from '../../types/Expense';
-import ExpenseService from '../../services/expenseService';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { MaskMoney } from '../../utils/masks';
-import { FormInput } from '../form/FormInput';
-import { FormToggle } from '../form/FormToggle';
-import { FormSelect } from '../form/FormSelect';
-import { FormDate } from '../form/FormDate';
-import CategoryService from '../../services/categoryService';
-import PrimaryButton from '../buttons/PrimaryButton';
+} from "phosphor-react"
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { ICreateExpense } from "../../types/Expense";
+import ExpenseService from "../../services/expenseService";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { MaskMoney } from "../../utils/masks";
+import { FormInput } from "../form/FormInput";
+import { FormToggle } from "../form/FormToggle";
+import { FormSelect } from "../form/FormSelect";
+import { FormDate } from "../form/FormDate";
+import CategoryService from "../../services/categoryService";
+import PrimaryButton from "../buttons/PrimaryButton";
 
 const defaultValues = {
-  value: 'R$00,00',
+  value: "R$00,00",
   date: new Date()
 }
 
@@ -28,27 +28,27 @@ const validationSchema = z
   .object({
     value: z
       // @ts-ignore
-      .custom<string>(string => string.match(/^R\$.+\d{2}$/) && Number(string.replace(/\D/g, '')) > 0, "O valor deve ser maior que 0!") // this regex tests for R$*,00
-      .transform(value => Number(value.replace(/\D/g, ''))),
+      .custom<string>(string => string.match(/^R\$.+\d{2}$/) && Number(string.replace(/\D/g, "")) > 0, "O valor deve ser maior que 0!") // this regex tests for R$*,00
+      .transform(value => Number(value.replace(/\D/g, ""))),
     status: z
       .boolean({
-        required_error: 'O status deve ser marcado!',
-        invalid_type_error: 'Algo deu errado :/'
+        required_error: "O status deve ser marcado!",
+        invalid_type_error: "Algo deu errado :/"
       })
-      .transform(value => value ? 'paid' : 'unpaid'),
+      .transform(value => value ? "paid" : "unpaid"),
     description: z
       .string({
-        required_error: 'A descrição deve ser preenchida!',
-        invalid_type_error: 'Algo deu errado :/'
+        required_error: "A descrição deve ser preenchida!",
+        invalid_type_error: "Algo deu errado :/"
       })
       .min(1, { message: "Deve informar a descrição!" }),
     date: z.date({
-      required_error: 'A data deve ser preenchida!',
-      invalid_type_error: 'Algo deu errado :/'
+      required_error: "A data deve ser preenchida!",
+      invalid_type_error: "Algo deu errado :/"
     }),
     categoryId: z.string({
-      required_error: 'A categoria deve ser preenchida!',
-      invalid_type_error: 'Algo deu errado :/'
+      required_error: "A categoria deve ser preenchida!",
+      invalid_type_error: "Algo deu errado :/"
     })
   })
 
@@ -64,7 +64,7 @@ export const CreateExpenseModal = () => {
   });
 
   const { data: categories } = useQuery({
-    queryKey: ['category'],
+    queryKey: ["category"],
     queryFn: async () => {
       return CategoryService.findAll()
     }
@@ -74,20 +74,20 @@ export const CreateExpenseModal = () => {
     async (expense: ICreateExpense) => await ExpenseService.createExpense(expense),
     {
       onSuccess: (data) => {
-        toast.success('Despesa Criada com sucesso', {
-          position: 'top-center',
+        toast.success("Despesa Criada com sucesso", {
+          position: "top-center",
         })
 
-        queryClient.invalidateQueries({ queryKey: 'transactions' })
-        queryClient.invalidateQueries({ queryKey: 'transactions_balances' })
+        queryClient.invalidateQueries({ queryKey: "transactions" })
+        queryClient.invalidateQueries({ queryKey: "transactions_balances" })
         
         resetForm()
 
         setOpen(false)
       },
       onError: (error: any) => {
-        toast.error('Houve um problema ao criar despesa', {
-          position: 'top-center',
+        toast.error("Houve um problema ao criar despesa", {
+          position: "top-center",
         })
       },
     }
@@ -122,7 +122,7 @@ export const CreateExpenseModal = () => {
               type="text"
               placeholder="Valor"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                setValue('value', MaskMoney(event.target.value))
+                setValue("value", MaskMoney(event.target.value))
               }}
               error={errors.value}
             />

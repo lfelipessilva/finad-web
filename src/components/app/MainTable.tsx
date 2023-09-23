@@ -1,12 +1,12 @@
 import { useState } from "react"
-import { format, startOfMonth, add, sub, endOfMonth } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { format, startOfMonth, add, sub, endOfMonth } from "date-fns"
+import { ptBR } from "date-fns/locale"
 import {
   Pencil as PencilIcon,
   Trash as TrashIcon, Funnel as FilterIcon,
   ArrowRight as ArrowRightIcon,
   ArrowLeft as ArrowLeftIcon,
-} from 'phosphor-react'
+} from "phosphor-react"
 import { CreateExpenseModal } from "../modals/CreateExpenseModal"
 import { CreateIncomeModal } from "../modals/CreateIncomeModal"
 import TransactionService from "../../services/transactionService"
@@ -61,12 +61,12 @@ export const MainTable = ({selectedDate, setSelectedDate}: MonthPickerProps) => 
             return (
               <tr className="bg-lightPrimary border-b-1 table-row text-left" key={row.id}>
                 <td className="table-cell p-4">{renderStatus(row.status)}</td>
-                <td className="table-cell">{format(new Date(row.date), 'dd/MM/yyyy')}</td>
+                <td className="table-cell">{format(new Date(row.date), "dd/MM/yyyy")}</td>
                 <td className="table-cell">{row.description}</td>
                 <td className="table-cell">{row?.category?.name}</td>
                 <td
                   className={`table-cell
-                  ${row.type === 'expense' ? 'text-unpaidRed' : 'text-paidGreen'}`}
+                  ${row.type === "expense" ? "text-unpaidRed" : "text-paidGreen"}`}
                 >
                   {formatValue(row.value)}
                 </td>
@@ -100,13 +100,13 @@ const MonthPicker = ({ selectedDate, setSelectedDate }: MonthPickerProps) => {
         onClick={() => setSelectedDate(date => sub(date, { months: 1 }))}
       />
       <p className="py-3 px-4 bg-primary rounded-full scale-75 opacity-50 border border-secondary">
-        {format(sub(selectedDate, { months: 1 }), 'MMMM/yyyy', { locale: ptBR })}
+        {format(sub(selectedDate, { months: 1 }), "MMMM/yyyy", { locale: ptBR })}
       </p>
       <p className="py-3 px-4 bg-transparent rounded-full border border-secondary text-secondary">
-        {format(selectedDate, 'MMMM/yyyy', { locale: ptBR })}
+        {format(selectedDate, "MMMM/yyyy", { locale: ptBR })}
       </p>
       <p className="py-3 px-4 bg-primary rounded-full scale-75 opacity-50 border border-secondary">
-        {format(add(selectedDate, { months: 1 }), 'MMMM/yyyy', { locale: ptBR })}
+        {format(add(selectedDate, { months: 1 }), "MMMM/yyyy", { locale: ptBR })}
       </p>
       <ArrowRightIcon
         size={32}
@@ -119,13 +119,13 @@ const MonthPicker = ({ selectedDate, setSelectedDate }: MonthPickerProps) => {
 }
 const renderStatus = (status: string) => {
   switch (status) {
-  case 'unpaid':
-    return 'Não pago'
-  case 'paid':
-    return 'Pago'
-  case 'unreceived':
-    return 'Não Recebido'
-  case 'received':
-    return 'Recebido'
+  case "unpaid":
+    return "Não pago"
+  case "paid":
+    return "Pago"
+  case "unreceived":
+    return "Não Recebido"
+  case "received":
+    return "Recebido"
   }
 }

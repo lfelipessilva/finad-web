@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { useState } from "react"
 import {
   ArrowCircleDown as ArrowCircleUpIcon,
   ArrowCircleUp as ArrowCircleDownIcon,
   Scales as ScalesIcon
-} from 'phosphor-react'
-import Head from 'next/head'
-import { dehydrate, QueryClient, useQuery } from 'react-query'
-import TransactionService from '../../services/transactionService'
-import { MainTable } from '../../components/app/MainTable'
-import { endOfMonth, startOfMonth } from 'date-fns'
-import { formatValue } from '../../utils/format'
+} from "phosphor-react"
+import Head from "next/head"
+import { dehydrate, QueryClient, useQuery } from "react-query"
+import TransactionService from "../../services/transactionService"
+import { MainTable } from "../../components/app/MainTable"
+import { endOfMonth, startOfMonth } from "date-fns"
+import { formatValue } from "../../utils/format"
 
 export default function Home(props: any) {
   const [selectedDate, setSelectedDate] = useState<Date>(startOfMonth(new Date()))

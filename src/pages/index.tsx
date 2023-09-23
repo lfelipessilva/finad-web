@@ -1,9 +1,9 @@
-import Head from 'next/head'
-import NextLink from 'next/link'
-import Image from 'next/image'
-import readingWomen from '../../public/reading_women.png'
-import Header from '../components/Header'
-import { ReadingWomen } from '../components/ReadingWomen'
+import Head from "next/head"
+import NextLink from "next/link"
+import Image from "next/image"
+import readingWomen from "../../public/reading_women.png"
+import Header from "../components/Header"
+import { ReadingWomen } from "../components/ReadingWomen"
 
 export default function Home() {
   return (
